@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		465C02B422F9640100DE6542 /* SearchUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 465C02B322F9640100DE6542 /* SearchUserViewController.m */; };
+		465C02B522F9640100DE6542 /* SearchUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 465C02B322F9640100DE6542 /* SearchUserViewController.m */; };
+		465C02C722F9B9C800DE6542 /* SearchUserPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 465C02C622F9B9C800DE6542 /* SearchUserPresenter.m */; };
+		465C02C822F9B9C800DE6542 /* SearchUserPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 465C02C622F9B9C800DE6542 /* SearchUserPresenter.m */; };
 		E027C7AF22F33A890056AAA0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E027C7AE22F33A890056AAA0 /* AppDelegate.m */; };
 		E027C7B722F33A8B0056AAA0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E027C7B622F33A8B0056AAA0 /* Assets.xcassets */; };
 		E027C7BA22F33A8B0056AAA0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E027C7B822F33A8B0056AAA0 /* LaunchScreen.storyboard */; };
@@ -28,6 +32,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		465C02B222F9640100DE6542 /* SearchUserViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchUserViewController.h; sourceTree = "<group>"; };
+		465C02B322F9640100DE6542 /* SearchUserViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchUserViewController.m; sourceTree = "<group>"; };
+		465C02C022F9A7B500DE6542 /* LoginPresenterInput.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginPresenterInput.h; sourceTree = "<group>"; };
+		465C02C522F9B9C800DE6542 /* SearchUserPresenter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchUserPresenter.h; sourceTree = "<group>"; };
+		465C02C622F9B9C800DE6542 /* SearchUserPresenter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchUserPresenter.m; sourceTree = "<group>"; };
+		465C02C922F9B9DF00DE6542 /* SearchUserPresenterInput.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchUserPresenterInput.h; sourceTree = "<group>"; };
+		465C02CA22F9BA0200DE6542 /* SearchUserPresenterOutput.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchUserPresenterOutput.h; sourceTree = "<group>"; };
 		E027C7AA22F33A890056AAA0 /* MVPExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MVPExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E027C7AD22F33A890056AAA0 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E027C7AE22F33A890056AAA0 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -65,6 +76,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		465C02C122F9B8D200DE6542 /* SearchUser */ = {
+			isa = PBXGroup;
+			children = (
+				465C02C422F9B91C00DE6542 /* View */,
+				465C02C222F9B8E000DE6542 /* Presenter */,
+			);
+			name = SearchUser;
+			sourceTree = "<group>";
+		};
+		465C02C222F9B8E000DE6542 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				465C02C522F9B9C800DE6542 /* SearchUserPresenter.h */,
+				465C02C622F9B9C800DE6542 /* SearchUserPresenter.m */,
+				465C02C922F9B9DF00DE6542 /* SearchUserPresenterInput.h */,
+				465C02CA22F9BA0200DE6542 /* SearchUserPresenterOutput.h */,
+			);
+			name = Presenter;
+			sourceTree = "<group>";
+		};
+		465C02C422F9B91C00DE6542 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				465C02B222F9640100DE6542 /* SearchUserViewController.h */,
+				465C02B322F9640100DE6542 /* SearchUserViewController.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
 		468997D322F471F100DD9DF9 /* Login */ = {
 			isa = PBXGroup;
 			children = (
@@ -72,20 +112,6 @@
 				E027C7D422F33B490056AAA0 /* LoginViewController.m */,
 			);
 			path = Login;
-			sourceTree = "<group>";
-		};
-		468997D622F4724900DD9DF9 /* UserInfo */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = UserInfo;
-			sourceTree = "<group>";
-		};
-		468997D722F4726700DD9DF9 /* SearchUser */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = SearchUser;
 			sourceTree = "<group>";
 		};
 		E027C7A122F33A890056AAA0 = {
@@ -109,9 +135,10 @@
 		E027C7AC22F33A890056AAA0 /* MVPExample */ = {
 			isa = PBXGroup;
 			children = (
-				E027C7E422F33ECF0056AAA0 /* Supporting Files */,
-				E027C7DA22F33B970056AAA0 /* Model */,
 				E027C7D122F33AD60056AAA0 /* Login */,
+				E027C7DA22F33B970056AAA0 /* Model */,
+				465C02C122F9B8D200DE6542 /* SearchUser */,
+				E027C7E422F33ECF0056AAA0 /* Supporting Files */,
 			);
 			path = MVPExample;
 			sourceTree = "<group>";
@@ -137,8 +164,6 @@
 		E027C7D222F33AE90056AAA0 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				468997D722F4726700DD9DF9 /* SearchUser */,
-				468997D622F4724900DD9DF9 /* UserInfo */,
 				468997D322F471F100DD9DF9 /* Login */,
 			);
 			name = View;
@@ -150,6 +175,7 @@
 				E027C7D722F33B8D0056AAA0 /* LoginPresenter.h */,
 				E027C7D822F33B8D0056AAA0 /* LoginPresenter.m */,
 				E027C7DF22F33C440056AAA0 /* LoginPresenterOutput.h */,
+				465C02C022F9A7B500DE6542 /* LoginPresenterInput.h */,
 			);
 			name = Presenter;
 			sourceTree = "<group>";
@@ -300,10 +326,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				E027C7D922F33B8D0056AAA0 /* LoginPresenter.m in Sources */,
+				465C02B422F9640100DE6542 /* SearchUserViewController.m in Sources */,
 				E027C7BD22F33A8B0056AAA0 /* main.m in Sources */,
 				E027C7AF22F33A890056AAA0 /* AppDelegate.m in Sources */,
 				E027C7D522F33B490056AAA0 /* LoginViewController.m in Sources */,
 				E027C7DE22F33BE00056AAA0 /* UserDTO.m in Sources */,
+				465C02C722F9B9C800DE6542 /* SearchUserPresenter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -312,6 +340,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				E027C7C722F33A8C0056AAA0 /* MVPExampleUITests.m in Sources */,
+				465C02B522F9640100DE6542 /* SearchUserViewController.m in Sources */,
+				465C02C822F9B9C800DE6542 /* SearchUserPresenter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

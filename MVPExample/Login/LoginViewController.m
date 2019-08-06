@@ -10,15 +10,14 @@
 #import "LoginPresenter.h"
 #import "AppDelegate.h"
 #import "UserDTO.h"
+#import "SearchUserViewController.h"
 
 @interface LoginViewController ()
 
-@property (nonatomic, strong) UserDTO               *userDTO;
-@property (nonatomic, strong) LoginPresenter        *presenter;
-@property (nonatomic, strong) UITextField           *loginField;
-@property (nonatomic, strong) UITextField           *passwordField;
-@property (nonatomic, strong) UIButton              *signInButton;
-@property (nonatomic, strong) NSDictionary          *userInfo;
+@property (nonatomic, strong) LoginPresenter            *presenter;
+@property (nonatomic, strong) UITextField               *loginField;
+@property (nonatomic, strong) UITextField               *passwordField;
+@property (nonatomic, strong) UIButton                  *signInButton;
 
 @end
 
@@ -28,26 +27,47 @@
     [super viewDidLoad];
     
     self.view.backgroundColor = UIColor.whiteColor;
-    self.navigationController.navigationBar.prefersLargeTitles = YES;
-    self.navigationItem.title = @"Github Client";
+    self.navigationItem.title = @"GitHub Client";
     
-    [self setupLoginField];
-    [self setupPasswordField];
-    [self setupSignInButton];
-    
-   // [self fetchJSON];
-    
+    [self setupViews];
     
     self.presenter = [LoginPresenter new];
     self.presenter.output = self;
     
-    [self.presenter loginWithUsername:@"lol" password:@"lol"];
+}
+
+- (void)setupViews {
+    [self setupLoginField];
+    [self setupPasswordField];
+    [self setupSignInButton];
 }
 
 #pragma mark - <LoginPresenterOutput>
 
 - (void)authorizationComplete {
-    //TODO: например, открытие след экрана
+
+    [self showSearchUserViewController];
+}
+
+- (void)showErrorWith:(NSString *)title message:(NSString *)message {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        self.loginField.text = @"";
+        self.passwordField.text = @"";
+    }]];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)showSearchUserViewController {
+    
+    SearchUserViewController *searchVC = [SearchUserViewController new];
+    [self.navigationController pushViewController:searchVC animated:YES];
+    
+}
+
+- (void)signInButtonTapped {
+    
+    [self.presenter loginWithUsername:self.loginField.text password:self.passwordField.text];
 }
 
 #pragma mark - Setup TextFields
@@ -97,8 +117,8 @@
     self.signInButton = [UIButton buttonWithType:UIButtonTypeSystem];
     [self.view addSubview:self.signInButton];
     [self.signInButton setTitle:@"Sign in" forState:UIControlStateNormal];
-    [self.signInButton addTarget:self action:@selector(addLoginAndPasswordInDictionary) forControlEvents:UIControlEventTouchUpInside];
-
+    [self.signInButton addTarget:self action:@selector(signInButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+    
     self.signInButton.translatesAutoresizingMaskIntoConstraints = NO;
     
     [NSLayoutConstraint activateConstraints:@[
@@ -110,25 +130,6 @@
     
 }
 
-- (void)addLoginAndPasswordInDictionary {
-    
-    self.userInfo = [[NSDictionary alloc]
-                          initWithObjectsAndKeys:
-                          self.loginField.text, @"login",
-                          self.passwordField.text, @"password", nil];
-    
-    for (NSString *key in self.userInfo) {
-        id value = self.userInfo[key];
-        NSLog(@"%@ for key: %@", value, key);
-    }
-    
-    self.userDTO = [[UserDTO alloc] initWithUserInfo:self.userInfo];
-    [self.userDTO authorization];
-    
-    UIViewController *vc = [[UIViewController alloc] init];
-    [self.navigationController pushViewController:vc animated:YES];
-
-}
 
 
 

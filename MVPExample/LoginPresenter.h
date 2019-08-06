@@ -8,14 +8,17 @@
 
 #import <Foundation/Foundation.h>
 #import "LoginViewController.h"
+#import "LoginPresenterInput.h"
 
 @protocol LoginPresenterOutput;
+@class UserDTO;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface LoginPresenter : NSObject
+@interface LoginPresenter : NSObject <LoginPresenterInput>
 
 @property (nonatomic, weak) id<LoginPresenterOutput> output;
+@property (nonatomic, strong) UserDTO *model;
 
 - (void)loginWithUsername:(NSString *)userName password:(NSString *)password;
 
