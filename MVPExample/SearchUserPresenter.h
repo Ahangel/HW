@@ -8,14 +8,16 @@
 
 #import <Foundation/Foundation.h>
 #import "UserDTO.h"
+#import "SearchUserPresenterInput.h"
+
 @protocol SearchUserPresenterOutput;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface SearchUserPresenter : NSObject
+@interface SearchUserPresenter : NSObject <SearchUserPresenterInput>
 
-@property (nonatomic, strong) UserDTO                     *model;
-@property (nonatomic, weak) id<SearchUserPresenterOutput> output;
+@property (nonatomic, strong)   UserDTO                         *model;
+@property (nonatomic, weak)     id<SearchUserPresenterOutput>   output;
 
 - (void)searchUser:(NSString *)name;
 

@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol SearchUserPresenterOutput <NSObject>
 
+- (void)showErrorWith:(NSString *)title message:(NSString *)message;
+
 @end
 
 NS_ASSUME_NONNULL_END

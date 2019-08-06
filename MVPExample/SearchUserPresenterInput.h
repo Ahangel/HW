@@ -12,6 +12,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol SearchUserPresenterInput <NSObject>
 
+- (void)searchWithError:(NSError *)error;
+- (void)searchIsComplete;
+
 @end
 
 NS_ASSUME_NONNULL_END

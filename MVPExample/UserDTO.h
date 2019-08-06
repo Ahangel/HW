@@ -9,18 +9,18 @@
 #import <Foundation/Foundation.h>
 
 @protocol LoginPresenterInput;
+@protocol SearchUserPresenterInput;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface UserDTO : NSObject
 
-@property (nonatomic, weak) id<LoginPresenterInput> output;
-
-@property (nonatomic, strong) NSDictionary  *userInfo;
-@property (nonatomic, strong) NSString      *searchUserName;
-
-@property (nonatomic, strong) NSString      *userName;
-@property (nonatomic, strong) NSString      *userImage;
+@property (nonatomic, weak) id<LoginPresenterInput>         loginOutput;
+@property (nonatomic, weak) id<SearchUserPresenterInput>    searchUserOutput;
+@property (nonatomic, strong) NSDictionary                  *userInfo;
+@property (nonatomic, strong) NSString                      *searchUserName;
+@property (nonatomic, strong) NSString                      *userName;
+@property (nonatomic, strong) NSString                      *userImage;
 
 - (instancetype)initWithUserInfo:(NSDictionary *)userInfo;
 

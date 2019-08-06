@@ -8,6 +8,7 @@
 
 #import "UserDTO.h"
 #import "LoginPresenterInput.h"
+#import "SearchUserPresenterInput.h"
 
 @interface UserDTO ()
 
@@ -59,14 +60,14 @@
                                                     
                                                     if (error) {
                                                         dispatch_async(dispatch_get_main_queue(), ^{
-                                                            [self.output authorizationWithError:error];
+                                                            [self.loginOutput authorizationWithError:error];
                                                         });
                                                         
                                                         return;
                                                     }
                                                     if (responseError) {
                                                         dispatch_async(dispatch_get_main_queue(), ^{
-                                                            [self.output authorizationWithError:responseError];
+                                                            [self.loginOutput authorizationWithError:responseError];
                                                         });
                                                         return;
                                                     }
@@ -76,7 +77,7 @@
                                                     }
                                                     
                                                     dispatch_sync(dispatch_get_main_queue(), ^{
-                                                        [self.output authorizationComplete];
+                                                        [self.loginOutput authorizationComplete];
                                                     });
                                                 }];
     [dataTask resume];
@@ -110,9 +111,32 @@
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request
                                                 completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
                                                     
-                                                    error = nil;
-                                                    
                                                     NSDictionary *searchUserInfo = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+                                                    
+                                                    NSHTTPURLResponse *HTTPResponse = (NSHTTPURLResponse *)response;
+                                                    NSInteger statusCode = [HTTPResponse statusCode];
+                                                    
+                                                    NSError *responseError = [self statusCodeCheck:statusCode];
+                                                    
+                                                    if (error) {
+                                                        dispatch_async(dispatch_get_main_queue(), ^{
+                                                            [self.searchUserOutput searchWithError:error];
+                                                        });
+                                                        
+                                                        return;
+                                                    }
+                                                    if (responseError) {
+                                                        dispatch_async(dispatch_get_main_queue(), ^{
+                                                            [self.searchUserOutput searchWithError:responseError];
+                                                        });
+                                                        return;
+                                                    }
+                                                    
+                                                    dispatch_sync(dispatch_get_main_queue(), ^{
+                                                        [self.searchUserOutput searchIsComplete];
+                                                    });
+                                                    
+                                                    
                                                     if (error) {
                                                         NSLog(@"Error");
                                                         return;
@@ -120,7 +144,8 @@
                                                         NSLog(@"Empty JSON");
                                                         return;
                                                     }
-                                                    
+                                                    // TODO: валидация
+                                                    //       complethe
                                                     self.userName = searchUserInfo[@"login"];
                                                     self.userImage = searchUserInfo[@"avatar_url"];
                                                     NSLog(@"%@ %@", self.userName, self.userImage);

@@ -33,7 +33,19 @@
 
 - (void)searchUserButtonTapped {
     
-    [self.output ]
+    [self.presenter searchUser:self.nameField.text];
+}
+
+- (void)showErrorWith:(NSString *)title message:(NSString *)message {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        self.nameField.text = @"";
+    }]];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)searchIsComplete {
+    
 }
 
 #pragma mark - Setup Views
@@ -89,7 +101,7 @@
     [self.view addSubview:self.showUserButton];
     
     [self.showUserButton setTitle:@"Let's find this user!" forState:UIControlStateNormal];
-    [self.showUserButton addTarget:self action:@selector(searchUserAfterTap) forControlEvents:UIControlEventTouchUpInside];
+    [self.showUserButton addTarget:self action:@selector(searchUserButtonTapped) forControlEvents:UIControlEventTouchUpInside];
     
     self.showUserButton.translatesAutoresizingMaskIntoConstraints = NO;
     

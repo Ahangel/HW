@@ -24,7 +24,7 @@
     }
     
     self.model = [[UserDTO alloc] initWithUserInfo:userInfo];
-    self.model.output = self;
+    self.model.loginOutput = self;
     [self.model authorization];
 }
 
