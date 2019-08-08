@@ -7,8 +7,6 @@
 //
 
 #import "UserDTO.h"
-#import "LoginPresenterInput.h"
-#import "SearchUserPresenterInput.h"
 
 @interface UserDTO ()
 
