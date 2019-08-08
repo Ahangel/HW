@@ -12,8 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol LoginPresenterInput <NSObject>
 
-- (void)authorizationWithError:(NSError *)error;
-- (void)authorizationComplete;
+//- (void)authorizationWithError:(NSError *)error;
+//- (void)authorizationComplete;
 
 @end
 

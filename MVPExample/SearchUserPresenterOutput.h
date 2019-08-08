@@ -8,11 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
+@class UserDTO;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol SearchUserPresenterOutput <NSObject>
 
 - (void)showErrorWith:(NSString *)title message:(NSString *)message;
+- (void)searchIsComplete:(UserDTO *)model;
 
 @end
 

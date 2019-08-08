@@ -14,12 +14,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface SearchUserPresenter : NSObject <SearchUserPresenterInput>
+@interface SearchUserPresenter : NSObject 
 
 @property (nonatomic, strong)   UserDTO                         *model;
 @property (nonatomic, weak)     id<SearchUserPresenterOutput>   output;
 
-- (void)searchUser:(NSString *)name;
+- (void)searchUserWithName:(NSString *)name;
 
 @end
 

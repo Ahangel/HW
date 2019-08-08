@@ -15,12 +15,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface LoginPresenter : NSObject <LoginPresenterInput>
+@interface LoginPresenter : NSObject 
 
-@property (nonatomic, weak) id<LoginPresenterOutput>    output;
-@property (nonatomic, strong) UserDTO                   *model;
+@property (nonatomic, weak)     id<LoginPresenterOutput>    output;
+@property (nonatomic, strong)   UserDTO                     *model;
 
-- (void)loginWithUsername:(NSString *)userName password:(NSString *)password;
+- (void)loginWithUserName:(NSString *)userName password:(NSString *)password;
 
 @end
 

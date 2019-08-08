@@ -10,6 +10,7 @@
 #import "UserDTO.h"
 #import "SearchUserPresenterOutput.h"
 #import "SearchUserPresenter.h"
+#import "UserInfoTableViewController.h"
 
 @interface SearchUserViewController ()
 
@@ -33,7 +34,7 @@
 
 - (void)searchUserButtonTapped {
     
-    [self.presenter searchUser:self.nameField.text];
+    [self.presenter searchUserWithName:self.nameField.text];
 }
 
 - (void)showErrorWith:(NSString *)title message:(NSString *)message {
@@ -44,8 +45,10 @@
     [self presentViewController:alert animated:YES completion:nil];
 }
 
-- (void)searchIsComplete {
+- (void)searchIsComplete:(UserDTO *)model {
     
+    UserInfoTableViewController *userInfoTableVC = [[UserInfoTableViewController alloc] initWithUserName:model.userName userRepo:model.repos];
+    [self.navigationController pushViewController:userInfoTableVC animated:YES];
 }
 
 #pragma mark - Setup Views

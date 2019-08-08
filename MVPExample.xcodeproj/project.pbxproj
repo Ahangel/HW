@@ -11,6 +11,12 @@
 		465C02B522F9640100DE6542 /* SearchUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 465C02B322F9640100DE6542 /* SearchUserViewController.m */; };
 		465C02C722F9B9C800DE6542 /* SearchUserPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 465C02C622F9B9C800DE6542 /* SearchUserPresenter.m */; };
 		465C02C822F9B9C800DE6542 /* SearchUserPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 465C02C622F9B9C800DE6542 /* SearchUserPresenter.m */; };
+		465C02D022FC1D2E00DE6542 /* UserInfoTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 465C02CF22FC1D2E00DE6542 /* UserInfoTableViewController.m */; };
+		465C02D122FC1D2E00DE6542 /* UserInfoTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 465C02CF22FC1D2E00DE6542 /* UserInfoTableViewController.m */; };
+		465C02D422FC290B00DE6542 /* UserInfoPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 465C02D322FC290B00DE6542 /* UserInfoPresenter.m */; };
+		465C02D522FC290B00DE6542 /* UserInfoPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 465C02D322FC290B00DE6542 /* UserInfoPresenter.m */; };
+		465C02DA22FC2E1B00DE6542 /* NetworkService.m in Sources */ = {isa = PBXBuildFile; fileRef = 465C02D922FC2E1B00DE6542 /* NetworkService.m */; };
+		465C02DB22FC2E1B00DE6542 /* NetworkService.m in Sources */ = {isa = PBXBuildFile; fileRef = 465C02D922FC2E1B00DE6542 /* NetworkService.m */; };
 		E027C7AF22F33A890056AAA0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E027C7AE22F33A890056AAA0 /* AppDelegate.m */; };
 		E027C7B722F33A8B0056AAA0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E027C7B622F33A8B0056AAA0 /* Assets.xcassets */; };
 		E027C7BA22F33A8B0056AAA0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E027C7B822F33A8B0056AAA0 /* LaunchScreen.storyboard */; };
@@ -39,6 +45,14 @@
 		465C02C622F9B9C800DE6542 /* SearchUserPresenter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchUserPresenter.m; sourceTree = "<group>"; };
 		465C02C922F9B9DF00DE6542 /* SearchUserPresenterInput.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchUserPresenterInput.h; sourceTree = "<group>"; };
 		465C02CA22F9BA0200DE6542 /* SearchUserPresenterOutput.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchUserPresenterOutput.h; sourceTree = "<group>"; };
+		465C02CE22FC1D2E00DE6542 /* UserInfoTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserInfoTableViewController.h; sourceTree = "<group>"; };
+		465C02CF22FC1D2E00DE6542 /* UserInfoTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserInfoTableViewController.m; sourceTree = "<group>"; };
+		465C02D222FC290B00DE6542 /* UserInfoPresenter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserInfoPresenter.h; sourceTree = "<group>"; };
+		465C02D322FC290B00DE6542 /* UserInfoPresenter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserInfoPresenter.m; sourceTree = "<group>"; };
+		465C02D622FC293F00DE6542 /* UserInfoPresenterOutput.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserInfoPresenterOutput.h; sourceTree = "<group>"; };
+		465C02D722FC295900DE6542 /* UserInfoPresenterInput.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserInfoPresenterInput.h; sourceTree = "<group>"; };
+		465C02D822FC2E1B00DE6542 /* NetworkService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NetworkService.h; sourceTree = "<group>"; };
+		465C02D922FC2E1B00DE6542 /* NetworkService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NetworkService.m; sourceTree = "<group>"; };
 		E027C7AA22F33A890056AAA0 /* MVPExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MVPExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E027C7AD22F33A890056AAA0 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E027C7AE22F33A890056AAA0 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -105,6 +119,35 @@
 			name = View;
 			sourceTree = "<group>";
 		};
+		465C02CB22FC1CF500DE6542 /* UserInfo */ = {
+			isa = PBXGroup;
+			children = (
+				465C02CD22FC1D0D00DE6542 /* View */,
+				465C02CC22FC1D0600DE6542 /* Presenter */,
+			);
+			name = UserInfo;
+			sourceTree = "<group>";
+		};
+		465C02CC22FC1D0600DE6542 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				465C02D222FC290B00DE6542 /* UserInfoPresenter.h */,
+				465C02D322FC290B00DE6542 /* UserInfoPresenter.m */,
+				465C02D622FC293F00DE6542 /* UserInfoPresenterOutput.h */,
+				465C02D722FC295900DE6542 /* UserInfoPresenterInput.h */,
+			);
+			name = Presenter;
+			sourceTree = "<group>";
+		};
+		465C02CD22FC1D0D00DE6542 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				465C02CE22FC1D2E00DE6542 /* UserInfoTableViewController.h */,
+				465C02CF22FC1D2E00DE6542 /* UserInfoTableViewController.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
 		468997D322F471F100DD9DF9 /* Login */ = {
 			isa = PBXGroup;
 			children = (
@@ -135,6 +178,7 @@
 		E027C7AC22F33A890056AAA0 /* MVPExample */ = {
 			isa = PBXGroup;
 			children = (
+				465C02CB22FC1CF500DE6542 /* UserInfo */,
 				E027C7D122F33AD60056AAA0 /* Login */,
 				E027C7DA22F33B970056AAA0 /* Model */,
 				465C02C122F9B8D200DE6542 /* SearchUser */,
@@ -209,6 +253,8 @@
 		E027C7E322F33EBD0056AAA0 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				465C02D822FC2E1B00DE6542 /* NetworkService.h */,
+				465C02D922FC2E1B00DE6542 /* NetworkService.m */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -327,8 +373,11 @@
 			files = (
 				E027C7D922F33B8D0056AAA0 /* LoginPresenter.m in Sources */,
 				465C02B422F9640100DE6542 /* SearchUserViewController.m in Sources */,
+				465C02D022FC1D2E00DE6542 /* UserInfoTableViewController.m in Sources */,
 				E027C7BD22F33A8B0056AAA0 /* main.m in Sources */,
+				465C02DA22FC2E1B00DE6542 /* NetworkService.m in Sources */,
 				E027C7AF22F33A890056AAA0 /* AppDelegate.m in Sources */,
+				465C02D422FC290B00DE6542 /* UserInfoPresenter.m in Sources */,
 				E027C7D522F33B490056AAA0 /* LoginViewController.m in Sources */,
 				E027C7DE22F33BE00056AAA0 /* UserDTO.m in Sources */,
 				465C02C722F9B9C800DE6542 /* SearchUserPresenter.m in Sources */,
@@ -341,6 +390,9 @@
 			files = (
 				E027C7C722F33A8C0056AAA0 /* MVPExampleUITests.m in Sources */,
 				465C02B522F9640100DE6542 /* SearchUserViewController.m in Sources */,
+				465C02D122FC1D2E00DE6542 /* UserInfoTableViewController.m in Sources */,
+				465C02D522FC290B00DE6542 /* UserInfoPresenter.m in Sources */,
+				465C02DB22FC2E1B00DE6542 /* NetworkService.m in Sources */,
 				465C02C822F9B9C800DE6542 /* SearchUserPresenter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

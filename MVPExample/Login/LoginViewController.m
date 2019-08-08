@@ -62,12 +62,11 @@
     
     SearchUserViewController *searchVC = [SearchUserViewController new];
     [self.navigationController pushViewController:searchVC animated:YES];
-    
 }
 
 - (void)signInButtonTapped {
     
-    [self.presenter loginWithUsername:self.loginField.text password:self.passwordField.text];
+    [self.presenter loginWithUserName:self.loginField.text password:self.passwordField.text];
 }
 
 #pragma mark - Setup TextFields
