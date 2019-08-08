@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "UserInfoTableViewController.h"
-#import "UserInfoPresenterInput.h"
+
 
 @protocol UserInfoPresenterOutput;
 @class UserDTO;

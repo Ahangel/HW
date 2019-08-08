@@ -40,17 +40,14 @@
 /* Begin PBXFileReference section */
 		465C02B222F9640100DE6542 /* SearchUserViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchUserViewController.h; sourceTree = "<group>"; };
 		465C02B322F9640100DE6542 /* SearchUserViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchUserViewController.m; sourceTree = "<group>"; };
-		465C02C022F9A7B500DE6542 /* LoginPresenterInput.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginPresenterInput.h; sourceTree = "<group>"; };
 		465C02C522F9B9C800DE6542 /* SearchUserPresenter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchUserPresenter.h; sourceTree = "<group>"; };
 		465C02C622F9B9C800DE6542 /* SearchUserPresenter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchUserPresenter.m; sourceTree = "<group>"; };
-		465C02C922F9B9DF00DE6542 /* SearchUserPresenterInput.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchUserPresenterInput.h; sourceTree = "<group>"; };
 		465C02CA22F9BA0200DE6542 /* SearchUserPresenterOutput.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchUserPresenterOutput.h; sourceTree = "<group>"; };
 		465C02CE22FC1D2E00DE6542 /* UserInfoTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserInfoTableViewController.h; sourceTree = "<group>"; };
 		465C02CF22FC1D2E00DE6542 /* UserInfoTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserInfoTableViewController.m; sourceTree = "<group>"; };
 		465C02D222FC290B00DE6542 /* UserInfoPresenter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserInfoPresenter.h; sourceTree = "<group>"; };
 		465C02D322FC290B00DE6542 /* UserInfoPresenter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserInfoPresenter.m; sourceTree = "<group>"; };
 		465C02D622FC293F00DE6542 /* UserInfoPresenterOutput.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserInfoPresenterOutput.h; sourceTree = "<group>"; };
-		465C02D722FC295900DE6542 /* UserInfoPresenterInput.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserInfoPresenterInput.h; sourceTree = "<group>"; };
 		465C02D822FC2E1B00DE6542 /* NetworkService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NetworkService.h; sourceTree = "<group>"; };
 		465C02D922FC2E1B00DE6542 /* NetworkService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NetworkService.m; sourceTree = "<group>"; };
 		E027C7AA22F33A890056AAA0 /* MVPExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MVPExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -104,7 +101,6 @@
 			children = (
 				465C02C522F9B9C800DE6542 /* SearchUserPresenter.h */,
 				465C02C622F9B9C800DE6542 /* SearchUserPresenter.m */,
-				465C02C922F9B9DF00DE6542 /* SearchUserPresenterInput.h */,
 				465C02CA22F9BA0200DE6542 /* SearchUserPresenterOutput.h */,
 			);
 			name = Presenter;
@@ -134,7 +130,6 @@
 				465C02D222FC290B00DE6542 /* UserInfoPresenter.h */,
 				465C02D322FC290B00DE6542 /* UserInfoPresenter.m */,
 				465C02D622FC293F00DE6542 /* UserInfoPresenterOutput.h */,
-				465C02D722FC295900DE6542 /* UserInfoPresenterInput.h */,
 			);
 			name = Presenter;
 			sourceTree = "<group>";
@@ -219,7 +214,6 @@
 				E027C7D722F33B8D0056AAA0 /* LoginPresenter.h */,
 				E027C7D822F33B8D0056AAA0 /* LoginPresenter.m */,
 				E027C7DF22F33C440056AAA0 /* LoginPresenterOutput.h */,
-				465C02C022F9A7B500DE6542 /* LoginPresenterInput.h */,
 			);
 			name = Presenter;
 			sourceTree = "<group>";

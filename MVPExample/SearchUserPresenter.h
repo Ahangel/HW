@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import "UserDTO.h"
-#import "SearchUserPresenterInput.h"
 
 @protocol SearchUserPresenterOutput;
 
