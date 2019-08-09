@@ -10,14 +10,14 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface NetworkService : NSObject
+@interface GHCNetworkService : NSObject
 
 - (void)authorizeWithLogin:(NSString *)login
                   password:(NSString *)password
                 completion:(void(^)(NSError * _Nullable))comletionBlock;
 
 - (void)searchUserWithName:(NSString *)name
-                completion:(void(^)(UserDTO * _Nullable, NSError * _Nullable))completionBlock;
+                completion:(void(^)(GHCUserDTO * _Nullable, NSError * _Nullable))completionBlock;
 
 @end
 

@@ -6,22 +6,28 @@
 //  Copyright © 2019 Evgeny Shishko. All rights reserved.
 //
 
-#import "LoginViewController.h"
-#import "LoginPresenter.h"
+#import "GHCLoginViewController.h"
+#import "GHCLoginPresenter.h"
 #import "AppDelegate.h"
-#import "UserDTO.h"
-#import "SearchUserViewController.h"
+#import "GHCUserDTO.h"
+#import "GHCSearchUserViewController.h"
 
-@interface LoginViewController ()
+@interface GHCLoginViewController ()
 
-@property (nonatomic, strong) LoginPresenter            *presenter;
+@property (nonatomic, strong) GHCLoginPresenter         *presenter;
 @property (nonatomic, strong) UITextField               *loginField;
 @property (nonatomic, strong) UITextField               *passwordField;
 @property (nonatomic, strong) UIButton                  *signInButton;
 
 @end
 
-@implementation LoginViewController
+@implementation GHCLoginViewController
+
+- (void)loadView {
+    [super loadView];
+    
+    [self setupViews];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -29,10 +35,12 @@
     self.view.backgroundColor = UIColor.whiteColor;
     self.navigationItem.title = @"GitHub Client";
     
-    [self setupViews];
-    
-    self.presenter = [LoginPresenter new];
+    self.presenter = [GHCLoginPresenter new];
     self.presenter.output = self;
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated {
     
 }
 
@@ -60,7 +68,7 @@
 
 - (void)showSearchUserViewController {
     
-    SearchUserViewController *searchVC = [SearchUserViewController new];
+    GHCSearchUserViewController *searchVC = [GHCSearchUserViewController new];
     [self.navigationController pushViewController:searchVC animated:YES];
 }
 

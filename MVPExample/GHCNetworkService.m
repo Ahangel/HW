@@ -6,10 +6,11 @@
 //  Copyright © 2019 Evgeny Shishko. All rights reserved.
 //
 
-#import "UserDTO.h"
-#import "NetworkService.h"
+#import "GHCUserDTO.h"
+#import "GHCNetworkService.h"
+#import "GHCRepoDTO.h"
 
-@implementation NetworkService
+@implementation GHCNetworkService
 
 - (void)authorizeWithLogin:(NSString *)login
                   password:(NSString *)password
@@ -69,7 +70,7 @@
 }
 
 - (void)searchUserWithName:(NSString *)name
-                completion:(void(^)(UserDTO * _Nullable, NSError * _Nullable))completionBlock {
+                completion:(void(^)(GHCUserDTO * _Nullable, NSError * _Nullable))completionBlock {
     
     NSString *path = [NSString stringWithFormat:@"https://api.github.com/users/%@", name];
     NSURL *url = [NSURL URLWithString:path];
@@ -97,13 +98,13 @@
                                                     }
                                                     
                                                     if (searchUserInfo == nil) {
-                                                        NSLog(@"Empty JSON");
+                                                        completionBlock(nil, 0);
                                                         return;
                                                     }
                                       
                                                     NSString *name = searchUserInfo[@"login"];
-                                                    [self fetchRepositoriesWithLogin:name completion:^(NSArray *repos, NSError * error) {
-                                                        UserDTO *model = [[UserDTO alloc] initWithUser:name repos:repos];
+                                                    [self fetchRepositoriesWithLogin:name completion:^(NSArray<GHCRepoDTO *> *repos, NSError * error) {
+                                                        GHCUserDTO *model = [[GHCUserDTO alloc] initWithUser:name repos:repos];
                                                         completionBlock(model, nil);
                                                     }];
                                                     NSLog(@"%@", name);
@@ -130,23 +131,20 @@
                                                         completionBlock(nil, error);
                                                         return;
                                                     }
-//                                                    if (responseError) {
-//                                                        completionBlock(nil, responseError);
-//                                                        return;
-//                                                    }
                                                     
                                                     if (fetchUserRepos == nil) {
-                                                        NSLog(@"Empty JSON");
+                                                        completionBlock(nil, 0);
                                                         return;
                                                     }
                                                     
                                                     NSMutableArray *repos = [NSMutableArray new];
                                                     for (NSDictionary *dict in fetchUserRepos) {
-                                                        NSString *value = dict[@"name"];
+                                                        NSString *value = [NSString stringWithFormat:@"%@", dict[@"id"]];
                                                         [repos addObject:value];
                                                     }
                                                    
                                                     completionBlock([repos copy], nil);
+                                                    NSLog(@"%@", fetchUserRepos);
                                                     NSLog(@"%@", repos);
                                                 }];
     [dataTask resume];
@@ -161,6 +159,8 @@
     } else if (statusCode == 404) {
         error = [[NSError alloc] initWithDomain:@"UserDTODomain" code:statusCode userInfo:@{NSLocalizedDescriptionKey: @"Couldn't find this user"}];
         return error;
+    } else if (statusCode == 0) {
+        error = [[NSError alloc] initWithDomain:@"UserDTODomain" code:statusCode userInfo:@{NSLocalizedDescriptionKey: @"Empty JSON"}];
     }
     
     return nil;

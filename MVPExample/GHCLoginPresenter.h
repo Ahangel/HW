@@ -7,18 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "LoginViewController.h"
+#import "GHCLoginViewController.h"
 
 
-@protocol LoginPresenterOutput;
-@class UserDTO;
+@protocol GHCLoginPresenterOutput;
+@class GHCUserDTO;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface LoginPresenter : NSObject 
+@interface GHCLoginPresenter : NSObject 
 
-@property (nonatomic, weak)     id<LoginPresenterOutput>    output;
-@property (nonatomic, strong)   UserDTO                     *model;
+@property (nonatomic, weak)     id<GHCLoginPresenterOutput>    output;
+@property (nonatomic, strong)   GHCUserDTO                     *model;
 
 - (void)loginWithUserName:(NSString *)userName password:(NSString *)password;
 

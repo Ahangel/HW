@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface UserDTO : NSObject
+@interface GHCUserDTO : NSObject
 
 @property (nonatomic, copy, readonly) NSString  *userName;
 @property (nonatomic, copy, readonly) NSArray   *repos;

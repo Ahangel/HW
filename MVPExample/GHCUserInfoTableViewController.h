@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface UserInfoTableViewController : UITableViewController
+@interface GHCUserInfoTableViewController : UITableViewController
 
 - (instancetype)initWithUserName:(NSString *)userName userRepo:(NSArray *)repos;
 

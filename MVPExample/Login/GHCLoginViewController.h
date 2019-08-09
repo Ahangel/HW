@@ -7,12 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "LoginPresenterOutput.h"
+#import "GHCLoginPresenterOutput.h"
 
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface LoginViewController : UIViewController <LoginPresenterOutput>
+@interface GHCLoginViewController : UIViewController <GHCLoginPresenterOutput>
 
 @end
 

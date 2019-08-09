@@ -6,23 +6,23 @@
 //  Copyright © 2019 Evgeny Shishko. All rights reserved.
 //
 
-#import "LoginPresenter.h"
-#import "LoginPresenterOutput.h"
-#import "UserDTO.h"
-#import "NetworkService.h"
+#import "GHCLoginPresenter.h"
+#import "GHCLoginPresenterOutput.h"
+#import "GHCUserDTO.h"
+#import "GHCNetworkService.h"
 
-@interface LoginPresenter ()
+@interface GHCLoginPresenter ()
 
-@property (nonatomic, strong) NetworkService *networkService;
+@property (nonatomic, strong) GHCNetworkService *networkService;
 
 @end
 
-@implementation LoginPresenter
+@implementation GHCLoginPresenter
 
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _networkService = [[NetworkService alloc] init];
+        _networkService = [[GHCNetworkService alloc] init];
     }
     return self;
 }

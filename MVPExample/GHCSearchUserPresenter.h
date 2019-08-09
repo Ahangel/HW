@@ -7,16 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "UserDTO.h"
+#import "GHCUserDTO.h"
 
-@protocol SearchUserPresenterOutput;
+@protocol GHCSearchUserPresenterOutput;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface SearchUserPresenter : NSObject 
+@interface GHCSearchUserPresenter : NSObject 
 
-@property (nonatomic, strong)   UserDTO                         *model;
-@property (nonatomic, weak)     id<SearchUserPresenterOutput>   output;
+@property (nonatomic, strong)   GHCUserDTO                         *model;
+@property (nonatomic, weak)     id<GHCSearchUserPresenterOutput>   output;
 
 - (void)searchUserWithName:(NSString *)name;
 

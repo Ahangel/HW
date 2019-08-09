@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "LoginViewController.h"
+#import "GHCLoginViewController.h"
 
 @interface AppDelegate ()
 
@@ -21,7 +21,7 @@
     self.window = [[UIWindow alloc] initWithFrame: UIScreen.mainScreen.bounds];
     [self.window makeKeyAndVisible];
     
-    self.loginVC = [[LoginViewController alloc] init];
+    self.loginVC = [[GHCLoginViewController alloc] init];
     self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:self.loginVC];
     
     return YES;

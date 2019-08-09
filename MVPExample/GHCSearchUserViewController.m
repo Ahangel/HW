@@ -6,29 +6,34 @@
 //  Copyright © 2019 Evgeny Shishko. All rights reserved.
 //
 
-#import "SearchUserViewController.h"
-#import "UserDTO.h"
-#import "SearchUserPresenterOutput.h"
-#import "SearchUserPresenter.h"
-#import "UserInfoTableViewController.h"
+#import "GHCSearchUserViewController.h"
+#import "GHCUserDTO.h"
+#import "GHCSearchUserPresenterOutput.h"
+#import "GHCSearchUserPresenter.h"
+#import "GHCUserInfoTableViewController.h"
 
-@interface SearchUserViewController ()
+@interface GHCSearchUserViewController ()
 
-@property (nonatomic, strong) SearchUserPresenter   *presenter;
+@property (nonatomic, strong) GHCSearchUserPresenter   *presenter;
 @property (nonatomic, strong) UILabel               *userNameLabel;
 @property (nonatomic, strong) UITextField           *nameField;
 @property (nonatomic, strong) UIButton              *showUserButton;
 
 @end
 
-@implementation SearchUserViewController
+@implementation GHCSearchUserViewController
+
+- (void)loadView {
+    [super loadView];
+    
+    [self setupViews];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     self.view.backgroundColor = UIColor.whiteColor;
-    [self setupViews];
-    self.presenter = [SearchUserPresenter new];
+    self.presenter = [GHCSearchUserPresenter new];
     self.presenter.output = self;
 }
 
@@ -45,9 +50,9 @@
     [self presentViewController:alert animated:YES completion:nil];
 }
 
-- (void)searchIsComplete:(UserDTO *)model {
+- (void)searchIsComplete:(GHCUserDTO *)model {
     
-    UserInfoTableViewController *userInfoTableVC = [[UserInfoTableViewController alloc] initWithUserName:model.userName userRepo:model.repos];
+    GHCUserInfoTableViewController *userInfoTableVC = [[GHCUserInfoTableViewController alloc] initWithUserName:model.userName userRepo:model.repos];
     [self.navigationController pushViewController:userInfoTableVC animated:YES];
 }
 

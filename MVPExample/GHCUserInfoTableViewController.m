@@ -6,16 +6,16 @@
 //  Copyright © 2019 Evgeny Shishko. All rights reserved.
 //
 
-#import "UserInfoTableViewController.h"
+#import "GHCUserInfoTableViewController.h"
 
-@interface UserInfoTableViewController ()
+@interface GHCUserInfoTableViewController ()
 
 @property (nonatomic, copy) NSString *userName;
 @property (nonatomic, copy) NSArray *repos;
 
 @end
 
-@implementation UserInfoTableViewController
+@implementation GHCUserInfoTableViewController
 
 - (instancetype)initWithUserName:(NSString *)userName userRepo:(NSArray *)repos{
     self = [super init];
@@ -29,7 +29,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-   
 }
 
 #pragma mark - Table view data source

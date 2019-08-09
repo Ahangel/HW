@@ -6,10 +6,10 @@
 //  Copyright © 2019 Evgeny Shishko. All rights reserved.
 //
 
-#import "UserInfoPresenter.h"
-#import "UserDTO.h"
-#import "UserInfoPresenterOutput.h"
+#import "GHCUserInfoPresenter.h"
+#import "GHCUserDTO.h"
+#import "GHCUserInfoPresenterOutput.h"
 
-@implementation UserInfoPresenter
+@implementation GHCUserInfoPresenter
 
 @end

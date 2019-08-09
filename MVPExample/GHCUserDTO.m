@@ -6,15 +6,16 @@
 //  Copyright © 2019 Evgeny Shishko. All rights reserved.
 //
 
-#import "UserDTO.h"
+#import "GHCUserDTO.h"
+#import "GHCRepoDTO.h"
 
-@interface UserDTO ()
+@interface GHCUserDTO ()
 
 @end
 
-@implementation UserDTO
+@implementation GHCUserDTO
 
-- (instancetype)initWithUser:(NSString *)name repos:(NSArray *)repos {
+- (instancetype)initWithUser:(NSString *)name repos:(NSArray<GHCRepoDTO *>*)repos {
     self = [super init];
     if (self) {
         _userName = [name copy];

@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol UserInfoPresenterOutput <NSObject>
+@protocol GHCUserInfoPresenterOutput <NSObject>
 
 @end
 

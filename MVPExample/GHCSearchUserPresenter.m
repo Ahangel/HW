@@ -6,23 +6,23 @@
 //  Copyright © 2019 Evgeny Shishko. All rights reserved.
 //
 
-#import "SearchUserPresenter.h"
-#import "SearchUserPresenterOutput.h"
-#import "NetworkService.h"
-#import "UserDTO.h"
+#import "GHCSearchUserPresenter.h"
+#import "GHCSearchUserPresenterOutput.h"
+#import "GHCNetworkService.h"
+#import "GHCUserDTO.h"
 
-@interface SearchUserPresenter ()
+@interface GHCSearchUserPresenter ()
 
-@property (nonatomic, strong) NetworkService *networkService;
+@property (nonatomic, strong) GHCNetworkService *networkService;
 
 @end
 
-@implementation SearchUserPresenter
+@implementation GHCSearchUserPresenter
 
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _networkService = [NetworkService new];
+        _networkService = [GHCNetworkService new];
     }
     return self;
 }
@@ -32,7 +32,7 @@
     __weak typeof(self) weakSelf = self;
     
     [self.networkService searchUserWithName:name
-                                 completion:^(UserDTO *model, NSError * _Nullable error) {
+                                 completion:^(GHCUserDTO *model, NSError * _Nullable error) {
                                      
                                      __strong typeof(self) strongSelf = weakSelf;
                                      
