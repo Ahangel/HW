@@ -18,6 +18,7 @@
 		465C02DA22FC2E1B00DE6542 /* GHCNetworkService.m in Sources */ = {isa = PBXBuildFile; fileRef = 465C02D922FC2E1B00DE6542 /* GHCNetworkService.m */; };
 		465C02DB22FC2E1B00DE6542 /* GHCNetworkService.m in Sources */ = {isa = PBXBuildFile; fileRef = 465C02D922FC2E1B00DE6542 /* GHCNetworkService.m */; };
 		465C02DF22FDA78C00DE6542 /* GHCRepoDTO.m in Sources */ = {isa = PBXBuildFile; fileRef = 465C02DE22FDA78C00DE6542 /* GHCRepoDTO.m */; };
+		465C02E32300532100DE6542 /* GHCUserInfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 465C02E22300532100DE6542 /* GHCUserInfoTableViewCell.m */; };
 		E027C7AF22F33A890056AAA0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E027C7AE22F33A890056AAA0 /* AppDelegate.m */; };
 		E027C7B722F33A8B0056AAA0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E027C7B622F33A8B0056AAA0 /* Assets.xcassets */; };
 		E027C7BA22F33A8B0056AAA0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E027C7B822F33A8B0056AAA0 /* LaunchScreen.storyboard */; };
@@ -53,6 +54,8 @@
 		465C02D922FC2E1B00DE6542 /* GHCNetworkService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GHCNetworkService.m; sourceTree = "<group>"; };
 		465C02DD22FDA78C00DE6542 /* GHCRepoDTO.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GHCRepoDTO.h; sourceTree = "<group>"; };
 		465C02DE22FDA78C00DE6542 /* GHCRepoDTO.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GHCRepoDTO.m; sourceTree = "<group>"; };
+		465C02E12300532100DE6542 /* GHCUserInfoTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GHCUserInfoTableViewCell.h; sourceTree = "<group>"; };
+		465C02E22300532100DE6542 /* GHCUserInfoTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GHCUserInfoTableViewCell.m; sourceTree = "<group>"; };
 		E027C7AA22F33A890056AAA0 /* MVPExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MVPExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E027C7AD22F33A890056AAA0 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E027C7AE22F33A890056AAA0 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -140,6 +143,7 @@
 		465C02CD22FC1D0D00DE6542 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				465C02E0230052F100DE6542 /* Cell */,
 				465C02CE22FC1D2E00DE6542 /* GHCUserInfoTableViewController.h */,
 				465C02CF22FC1D2E00DE6542 /* GHCUserInfoTableViewController.m */,
 			);
@@ -153,6 +157,15 @@
 				465C02DE22FDA78C00DE6542 /* GHCRepoDTO.m */,
 			);
 			name = Repo;
+			sourceTree = "<group>";
+		};
+		465C02E0230052F100DE6542 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				465C02E12300532100DE6542 /* GHCUserInfoTableViewCell.h */,
+				465C02E22300532100DE6542 /* GHCUserInfoTableViewCell.m */,
+			);
+			name = Cell;
 			sourceTree = "<group>";
 		};
 		468997D322F471F100DD9DF9 /* Login */ = {
@@ -387,6 +400,7 @@
 				E027C7AF22F33A890056AAA0 /* AppDelegate.m in Sources */,
 				465C02D422FC290B00DE6542 /* GHCUserInfoPresenter.m in Sources */,
 				E027C7D522F33B490056AAA0 /* GHCLoginViewController.m in Sources */,
+				465C02E32300532100DE6542 /* GHCUserInfoTableViewCell.m in Sources */,
 				E027C7DE22F33BE00056AAA0 /* GHCUserDTO.m in Sources */,
 				465C02C722F9B9C800DE6542 /* GHCSearchUserPresenter.m in Sources */,
 			);

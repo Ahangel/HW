@@ -9,23 +9,17 @@
 #import "GHCUserDTO.h"
 #import "GHCRepoDTO.h"
 
-@interface GHCUserDTO ()
-
-@end
-
 @implementation GHCUserDTO
 
-- (instancetype)initWithUser:(NSString *)name repos:(NSArray<GHCRepoDTO *>*)repos {
+- (instancetype)initWithUser:(NSString*)userName
+                       repos:(NSArray<GHCRepoDTO *>*)repos
+{
     self = [super init];
     if (self) {
-        _userName = [name copy];
         _repos = [repos copy];
+        _userName = [userName copy];
     }
     return self;
 }
-
-
-
-
 
 @end

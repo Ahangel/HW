@@ -8,14 +8,17 @@
 
 #import <Foundation/Foundation.h>
 
+@class GHCRepoDTO;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface GHCUserDTO : NSObject
 
-@property (nonatomic, copy, readonly) NSString  *userName;
-@property (nonatomic, copy, readonly) NSArray   *repos;
+@property (nonatomic, copy, readonly) NSString                  *userName;
+@property (nonatomic, copy, readonly) NSArray<GHCRepoDTO *>     *repos;
 
-- (instancetype)initWithUser:(NSString *)name repos:(NSArray *)repos;
+- (instancetype)initWithUser:(NSString *)userName
+                       repos:(NSArray<GHCRepoDTO *>*)repos;
 
 @end
 

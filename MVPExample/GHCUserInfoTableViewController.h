@@ -7,12 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GHCUserInfoTableViewCell.h"
+#import "GHCRepoDTO.h"
+
+@class GHCRepoDTO;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface GHCUserInfoTableViewController : UITableViewController
 
-- (instancetype)initWithUserName:(NSString *)userName userRepo:(NSArray *)repos;
+- (instancetype)initWithUserName:(NSString *)userName userRepo:(NSArray<GHCRepoDTO *> *)repos;
 
 @end
 

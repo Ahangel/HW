@@ -12,11 +12,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface GHCRepoDTO : NSObject
 
-@property (nonatomic, assign) NSUInteger    repoID;
-@property (nonatomic, copy) NSString        *repoName;
-@property (nonatomic, assign) NSUInteger    stargazerCounter;
-@property (nonatomic, assign) NSUInteger    forksCounter;
+@property (nonatomic, copy) NSString    *repoID;
+@property (nonatomic, copy) NSString    *repoName;
+@property (nonatomic, copy) NSString    *stargazerCounter;
+@property (nonatomic, copy) NSString    *forksCounter;
+@property (nonatomic, copy) NSString    *language;
 
+- (instancetype)initWithData:(NSString *)repoID
+                    repoName:(NSString *)repoName
+                starsCounter:(NSString *)stargazerCounter
+                forksCounter:(NSString *)forksCounter
+                    language:(NSString *)language;
 @end
 
 NS_ASSUME_NONNULL_END

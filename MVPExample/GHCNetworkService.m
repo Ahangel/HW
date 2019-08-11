@@ -45,7 +45,7 @@
                                                     
                                                     NSError *responseError = [self statusCodeCheck:statusCode];
                                                     
-                                                    NSLog(@"%@",responseData);
+//                                                    NSLog(@"%@",responseData);
                                                     
                                                     if (error) {
                                                         completionBlock(error);
@@ -56,17 +56,17 @@
                                                         return;
                                                     }
                                                     if (responseData == nil) {
-                                                        NSLog(@"Empty JSON");
+                                                        completionBlock(0);
                                                         return;
                                                     }
                                                     
                                                     completionBlock(nil);
                                                     
-                                                    NSLog(@"%@", responseData);
+//                                                    NSLog(@"%@", responseData);
                                                 }];
     [dataTask resume];
     
-    NSLog(@"Header Fields Request--->> %@",request.allHTTPHeaderFields);
+//    NSLog(@"Header Fields Request--->> %@",request.allHTTPHeaderFields);
 }
 
 - (void)searchUserWithName:(NSString *)name
@@ -102,20 +102,21 @@
                                                         return;
                                                     }
                                       
-                                                    NSString *name = searchUserInfo[@"login"];
-                                                    [self fetchRepositoriesWithLogin:name completion:^(NSArray<GHCRepoDTO *> *repos, NSError * error) {
-                                                        GHCUserDTO *model = [[GHCUserDTO alloc] initWithUser:name repos:repos];
+                                                    NSString *userName = searchUserInfo[@"login"];
+                                                    [self fetchRepositoriesWithLogin:userName completion:^(NSArray<GHCRepoDTO *> *repos, NSError * error) {
+                                                        GHCUserDTO *model = [[GHCUserDTO alloc] initWithUser:userName repos:repos];
                                                         completionBlock(model, nil);
                                                     }];
-                                                    NSLog(@"%@", name);
+//                                                    NSLog(@"%@", searchUserInfo);
+//                                                    NSLog(@"%@", userName);
                                                 }];
     [dataTask resume];
 }
 
-- (void)fetchRepositoriesWithLogin:(NSString *)name
+- (void)fetchRepositoriesWithLogin:(NSString *)userName
                         completion:(void(^)(NSArray * _Nullable, NSError * _Nullable))completionBlock {
     
-    NSString *path = [NSString stringWithFormat:@"https://api.github.com/users/%@/repos", name];
+    NSString *path = [NSString stringWithFormat:@"https://api.github.com/users/%@/repos", userName];
     NSURL *url = [NSURL URLWithString:path];
     
     NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:0];
@@ -126,7 +127,6 @@
                                                     
                                                     NSArray *fetchUserRepos = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
 
-                                                    
                                                     if (error) {
                                                         completionBlock(nil, error);
                                                         return;
@@ -137,15 +137,23 @@
                                                         return;
                                                     }
                                                     
-                                                    NSMutableArray *repos = [NSMutableArray new];
-                                                    for (NSDictionary *dict in fetchUserRepos) {
-                                                        NSString *value = [NSString stringWithFormat:@"%@", dict[@"id"]];
-                                                        [repos addObject:value];
-                                                    }
-                                                   
-                                                    completionBlock([repos copy], nil);
                                                     NSLog(@"%@", fetchUserRepos);
-                                                    NSLog(@"%@", repos);
+                                                    
+                                                    NSMutableArray<GHCRepoDTO *> *repos = [NSMutableArray new];
+                                                    
+                                                    for (NSDictionary *repoDict in fetchUserRepos) {
+                                                        NSString *repoID = [NSString stringWithFormat:@"%@", repoDict[@"id"]];
+                                                        NSString *repoName = [NSString stringWithFormat:@"%@", repoDict[@"name"]];
+                                                        NSString *starsCounter = [NSString stringWithFormat:@"%@", repoDict[@"stargazers_count"]];
+                                                        NSString *forksCounter = [NSString stringWithFormat:@"%@", repoDict[@"forks_count"]];
+                                                        NSString *language = [NSString stringWithFormat:@"%@", repoDict[@"language"]];
+                                                        GHCRepoDTO *repo = [[GHCRepoDTO alloc] initWithData:repoID repoName:repoName starsCounter:starsCounter forksCounter:forksCounter language:language];
+                                                        [repos addObject:repo];
+                                                    }
+//                                                    NSLog(@"%@", repos);
+                                                    completionBlock([repos copy], nil);
+
+                                                    
                                                 }];
     [dataTask resume];
 }

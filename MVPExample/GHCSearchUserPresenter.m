@@ -51,26 +51,4 @@
                                  }];
 }
 
-
-
-
-
-
-//- (void)searchUser:(NSString *)name {
-//    self.model = [UserDTO new];
-//    self.model.searchUserName = name;
-//
-//    self.model.searchUserOutput = self;
-//    [self.model searchUser];
-//}
-//
-//- (void)searchWithError:(NSError *)error {
-//    NSString *code = [NSString stringWithFormat:@"Error: %lu", error.code];
-//    NSString *message = [error.localizedDescription copy];
-//    [self.output showErrorWith:code message:message];
-//}
-//
-//- (void)searchIsComplete {
-//    [self.output searchIsComplete];
-//}
 @end
