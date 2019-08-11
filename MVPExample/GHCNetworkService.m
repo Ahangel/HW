@@ -78,15 +78,19 @@
     NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:0];
     NSURLSession *session = [NSURLSession sharedSession];
     
+    __weak typeof(self) weakSelf = self;
+    
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request
                                                 completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                                                    
+                                                    __strong typeof(self) strongSelf = weakSelf;
                                                     
                                                     NSDictionary *searchUserInfo = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
                                                     
                                                     NSHTTPURLResponse *HTTPResponse = (NSHTTPURLResponse *)response;
                                                     NSInteger statusCode = [HTTPResponse statusCode];
                                                     
-                                                    NSError *responseError = [self statusCodeCheck:statusCode];
+                                                    NSError *responseError = [strongSelf statusCodeCheck:statusCode];
                                                     
                                                     if (error) {
                                                         completionBlock(nil, error);
@@ -103,12 +107,10 @@
                                                     }
                                       
                                                     NSString *userName = searchUserInfo[@"login"];
-                                                    [self fetchRepositoriesWithLogin:userName completion:^(NSArray<GHCRepoDTO *> *repos, NSError * error) {
+                                                    [strongSelf fetchRepositoriesWithLogin:userName completion:^(NSArray<GHCRepoDTO *> *repos, NSError * error) {
                                                         GHCUserDTO *model = [[GHCUserDTO alloc] initWithUser:userName repos:repos];
                                                         completionBlock(model, nil);
                                                     }];
-//                                                    NSLog(@"%@", searchUserInfo);
-//                                                    NSLog(@"%@", userName);
                                                 }];
     [dataTask resume];
 }
@@ -150,7 +152,6 @@
                                                         GHCRepoDTO *repo = [[GHCRepoDTO alloc] initWithData:repoID repoName:repoName starsCounter:starsCounter forksCounter:forksCounter language:language];
                                                         [repos addObject:repo];
                                                     }
-//                                                    NSLog(@"%@", repos);
                                                     completionBlock([repos copy], nil);
 
                                                     
