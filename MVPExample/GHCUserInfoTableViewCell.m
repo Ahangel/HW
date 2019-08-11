@@ -43,15 +43,14 @@
     
     self.starsCounterLabel.backgroundColor = UIColor.clearColor;
     self.starsCounterLabel.textAlignment = NSTextAlignmentLeft;
-    self.starsCounterLabel.text = @"Stars(t): 4";
     self.starsCounterLabel.font = [UIFont systemFontOfSize:13];
     [self.starsCounterLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
     
     [NSLayoutConstraint activateConstraints:@[
-                                              [self.starsCounterLabel.centerXAnchor constraintEqualToAnchor:self.contentView.centerXAnchor constant:40],
+                                              [self.starsCounterLabel.centerXAnchor constraintEqualToAnchor:self.contentView.centerXAnchor constant:80],
                                               [self.starsCounterLabel.centerYAnchor constraintEqualToAnchor:self.contentView.centerYAnchor],
                                               [self.starsCounterLabel.heightAnchor  constraintEqualToConstant:40],
-                                              [self.starsCounterLabel.widthAnchor   constraintEqualToConstant:80]
+                                              [self.starsCounterLabel.widthAnchor   constraintEqualToConstant:60]
                                               ]];
 }
 
@@ -62,16 +61,14 @@
     
     self.forksCounterLabel.backgroundColor = UIColor.clearColor;
     self.forksCounterLabel.textAlignment = NSTextAlignmentLeft;
-    self.forksCounterLabel.text = @"Forks(t): 5";
     self.forksCounterLabel.font = [UIFont systemFontOfSize:13];
-    
     [self.forksCounterLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
     
     [NSLayoutConstraint activateConstraints:@[
-                                              [self.forksCounterLabel.centerXAnchor constraintEqualToAnchor:self.contentView.centerXAnchor constant:110],
+                                              [self.forksCounterLabel.centerXAnchor constraintEqualToAnchor:self.contentView.centerXAnchor constant:150],
                                               [self.forksCounterLabel.centerYAnchor constraintEqualToAnchor:self.contentView.centerYAnchor],
                                               [self.forksCounterLabel.heightAnchor  constraintEqualToConstant:40],
-                                              [self.forksCounterLabel.widthAnchor   constraintEqualToConstant:80]
+                                              [self.forksCounterLabel.widthAnchor   constraintEqualToConstant:60]
                                               ]];
 }
 
