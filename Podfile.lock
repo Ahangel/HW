@@ -1,0 +1,16 @@
+PODS:
+  - FXKeychain (1.5.3)
+
+DEPENDENCIES:
+  - FXKeychain (~> 1.5)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - FXKeychain
+
+SPEC CHECKSUMS:
+  FXKeychain: 2fe54573946ffef634f4e2a2851e6c8f4ea15e76
+
+PODFILE CHECKSUM: 60d6237108d12e3f606d6d5152242b46251e28ee
+
+COCOAPODS: 1.7.5

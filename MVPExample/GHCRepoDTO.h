@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString    *forksCounter;
 @property (nonatomic, copy) NSString    *language;
 
-- (instancetype)initWithDictionary:(NSDictionary *)data;
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 @end
 
 NS_ASSUME_NONNULL_END
