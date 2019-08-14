@@ -28,7 +28,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.tableView registerClass:[GHCUserInfoTableViewCell class] forCellReuseIdentifier:@"Cell"];
+    [self.tableView registerClass:[GHCUserInfoTableViewCell class] forCellReuseIdentifier:NSStringFromClass([GHCUserInfoTableViewCell class])];
     
 }
 
@@ -50,12 +50,13 @@
     
     if (indexPath.section == 0)
     {
-        UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cellName"];
+        UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                                       reuseIdentifier:NSStringFromClass([UITableViewCell class])];
         cell.textLabel.text = self.userName;
         return cell;
     }
     else {
-        GHCUserInfoTableViewCell *cell = [[GHCUserInfoTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"Cell"];
+        GHCUserInfoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([GHCUserInfoTableViewCell class])];
         GHCRepoDTO *repo = self.repos[indexPath.row];
         cell.textLabel.text = repo.repoName;
         cell.detailTextLabel.text = repo.language;

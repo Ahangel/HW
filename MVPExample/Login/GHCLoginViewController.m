@@ -23,25 +23,16 @@
 
 @implementation GHCLoginViewController
 
-- (void)loadView {
-    [super loadView];
-    
-    [self setupViews];
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self setupViews];
     
     self.view.backgroundColor = UIColor.whiteColor;
     self.navigationItem.title = @"GitHub Client";
     
     self.presenter = [GHCLoginPresenter new];
     self.presenter.output = self;
-    
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    
 }
 
 - (void)setupViews {
@@ -58,10 +49,16 @@
 }
 
 - (void)showErrorWith:(NSString *)title message:(NSString *)message {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
-    [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        self.loginField.text = @"";
-        self.passwordField.text = @"";
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:title
+                                                                   message:message
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    __weak typeof(self) weakSelf = self;
+    [alert addAction:[UIAlertAction actionWithTitle:@"OK"
+                                              style:UIAlertActionStyleDefault
+                                            handler:^(UIAlertAction * _Nonnull action) {
+        __strong typeof(self) strongSelf = weakSelf;
+        strongSelf.loginField.text = @"";
+        strongSelf.passwordField.text = @"";
     }]];
     [self presentViewController:alert animated:YES completion:nil];
 }

@@ -10,23 +10,19 @@
 
 @implementation GHCRepoDTO
 
-- (instancetype)initWithData:(NSString *)repoID
-                    repoName:(NSString *)repoName
-                starsCounter:(NSString *)stargazerCounter
-                forksCounter:(NSString *)forksCounter
-                    language:(NSString *)language
+- (instancetype)initWithDictionary:(NSDictionary *)data
 {
     self = [super init];
     if (self) {
-        _repoID = [repoID copy];
-        _repoName = [repoName copy];
-        _stargazerCounter = [stargazerCounter copy];
-        _forksCounter = [forksCounter copy];
+        _repoID = [[NSString stringWithFormat:@"%@",data[@"id"]] copy];
+        _repoName = [[NSString stringWithFormat:@"%@",data[@"name"]] copy];
+        _stargazerCounter = [[NSString stringWithFormat:@"%@",data[@"stargazers_count"]] copy];
+        _forksCounter = [[NSString stringWithFormat:@"%@",data[@"forks_count"]] copy];
         
-        if ([language isEqual:@"<null>"]) {
+        if ([[NSString stringWithFormat:@"%@",data[@"language"]] isEqual:@"<null>"]) {
             _language = @"None";
         } else {
-            _language = [language copy];
+            _language = [[NSString stringWithFormat:@"%@",data[@"language"]] copy];
         }
     }
     return self;

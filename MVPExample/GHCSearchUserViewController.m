@@ -23,15 +23,9 @@
 
 @implementation GHCSearchUserViewController
 
-- (void)loadView {
-    [super loadView];
-    
-    [self setupViews];
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [self setupViews];
     self.view.backgroundColor = UIColor.whiteColor;
     self.presenter = [GHCSearchUserPresenter new];
     self.presenter.output = self;
@@ -43,9 +37,15 @@
 }
 
 - (void)showErrorWith:(NSString *)title message:(NSString *)message {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
-    [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        self.nameField.text = @"";
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:title
+                                                                   message:message
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    __weak typeof(self) weakSelf = self;
+    [alert addAction:[UIAlertAction actionWithTitle:@"OK"
+                                              style:UIAlertActionStyleDefault
+                                            handler:^(UIAlertAction * _Nonnull action) {
+                                                __strong typeof(self) strongSelf = weakSelf;
+                                                strongSelf.nameField.text = @"";
     }]];
     [self presentViewController:alert animated:YES completion:nil];
 }

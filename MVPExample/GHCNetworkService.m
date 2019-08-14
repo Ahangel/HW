@@ -43,9 +43,7 @@
                                                     NSHTTPURLResponse *HTTPResponse = (NSHTTPURLResponse *)response;
                                                     NSInteger statusCode = [HTTPResponse statusCode];
                                                     
-                                                    NSError *responseError = [self statusCodeCheck:statusCode];
-                                                    
-//                                                    NSLog(@"%@",responseData);
+                                                    NSError *responseError = [self errorWithStatusCodeCheck:statusCode];
                                                     
                                                     if (error) {
                                                         completionBlock(error);
@@ -62,17 +60,14 @@
                                                     
                                                     completionBlock(nil);
                                                     
-//                                                    NSLog(@"%@", responseData);
                                                 }];
     [dataTask resume];
-    
-//    NSLog(@"Header Fields Request--->> %@",request.allHTTPHeaderFields);
 }
 
-- (void)searchUserWithName:(NSString *)name
+- (void)searchUserWithLogin:(NSString *)login
                 completion:(void(^)(GHCUserDTO * _Nullable, NSError * _Nullable))completionBlock {
     
-    NSString *path = [NSString stringWithFormat:@"https://api.github.com/users/%@", name];
+    NSString *path = [NSString stringWithFormat:@"https://api.github.com/users/%@", login];
     NSURL *url = [NSURL URLWithString:path];
     
     NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:0];
@@ -90,7 +85,7 @@
                                                     NSHTTPURLResponse *HTTPResponse = (NSHTTPURLResponse *)response;
                                                     NSInteger statusCode = [HTTPResponse statusCode];
                                                     
-                                                    NSError *responseError = [strongSelf statusCodeCheck:statusCode];
+                                                    NSError *responseError = [strongSelf errorWithStatusCodeCheck:statusCode];
                                                     
                                                     if (error) {
                                                         completionBlock(nil, error);
@@ -106,19 +101,19 @@
                                                         return;
                                                     }
                                       
-                                                    NSString *userName = searchUserInfo[@"login"];
-                                                    [strongSelf fetchRepositoriesWithLogin:userName completion:^(NSArray<GHCRepoDTO *> *repos, NSError * error) {
-                                                        GHCUserDTO *model = [[GHCUserDTO alloc] initWithUser:userName repos:repos];
+                                                    NSString *login = searchUserInfo[@"login"];
+                                                    [strongSelf fetchRepositoriesWithLogin:login completion:^(NSArray<GHCRepoDTO *> *repos, NSError * error) {
+                                                        GHCUserDTO *model = [[GHCUserDTO alloc] initWithLogin:login repos:repos];
                                                         completionBlock(model, nil);
                                                     }];
                                                 }];
     [dataTask resume];
 }
 
-- (void)fetchRepositoriesWithLogin:(NSString *)userName
+- (void)fetchRepositoriesWithLogin:(NSString *)login
                         completion:(void(^)(NSArray * _Nullable, NSError * _Nullable))completionBlock {
     
-    NSString *path = [NSString stringWithFormat:@"https://api.github.com/users/%@/repos", userName];
+    NSString *path = [NSString stringWithFormat:@"https://api.github.com/users/%@/repos", login];
     NSURL *url = [NSURL URLWithString:path];
     
     NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData timeoutInterval:0];
@@ -139,18 +134,13 @@
                                                         return;
                                                     }
                                                     
-                                                    NSLog(@"%@", fetchUserRepos);
-                                                    
                                                     NSMutableArray<GHCRepoDTO *> *repos = [NSMutableArray new];
                                                     
                                                     for (NSDictionary *repoDict in fetchUserRepos) {
-                                                        NSString *repoID = [NSString stringWithFormat:@"%@", repoDict[@"id"]];
-                                                        NSString *repoName = [NSString stringWithFormat:@"%@", repoDict[@"name"]];
-                                                        NSString *starsCounter = [NSString stringWithFormat:@"%@", repoDict[@"stargazers_count"]];
-                                                        NSString *forksCounter = [NSString stringWithFormat:@"%@", repoDict[@"forks_count"]];
-                                                        NSString *language = [NSString stringWithFormat:@"%@", repoDict[@"language"]];
-                                                        GHCRepoDTO *repo = [[GHCRepoDTO alloc] initWithData:repoID repoName:repoName starsCounter:starsCounter forksCounter:forksCounter language:language];
-                                                        [repos addObject:repo];
+                                                        @autoreleasepool {
+                                                            GHCRepoDTO *repo = [[GHCRepoDTO alloc] initWithDictionary:repoDict];
+                                                            [repos addObject:repo];
+                                                        }
                                                     }
                                                     completionBlock([repos copy], nil);
 
@@ -159,7 +149,7 @@
     [dataTask resume];
 }
 
-- (nullable NSError *)statusCodeCheck:(NSInteger)statusCode {
+- (nullable NSError *)errorWithStatusCodeCheck:(NSInteger)statusCode {
     
     NSError *error = nil;
     if (statusCode == 401) {

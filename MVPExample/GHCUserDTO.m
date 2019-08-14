@@ -11,13 +11,13 @@
 
 @implementation GHCUserDTO
 
-- (instancetype)initWithUser:(NSString*)userName
+- (instancetype)initWithLogin:(NSString*)login
                        repos:(NSArray<GHCRepoDTO *>*)repos
 {
     self = [super init];
     if (self) {
         _repos = [repos copy];
-        _userName = [userName copy];
+        _userName = [login copy];
     }
     return self;
 }

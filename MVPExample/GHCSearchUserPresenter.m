@@ -27,11 +27,11 @@
     return self;
 }
 
-- (void)searchUserWithName:(NSString *)name {
+- (void)searchUserWithName:(NSString *)login {
     
     __weak typeof(self) weakSelf = self;
     
-    [self.networkService searchUserWithName:name
+    [self.networkService searchUserWithLogin:login
                                  completion:^(GHCUserDTO *model, NSError * _Nullable error) {
                                      
                                      __strong typeof(self) strongSelf = weakSelf;

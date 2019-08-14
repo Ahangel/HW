@@ -18,11 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString    *forksCounter;
 @property (nonatomic, copy) NSString    *language;
 
-- (instancetype)initWithData:(NSString *)repoID
-                    repoName:(NSString *)repoName
-                starsCounter:(NSString *)stargazerCounter
-                forksCounter:(NSString *)forksCounter
-                    language:(NSString *)language;
+- (instancetype)initWithDictionary:(NSDictionary *)data;
 @end
 
 NS_ASSUME_NONNULL_END

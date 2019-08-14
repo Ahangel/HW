@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, readonly) NSString                  *userName;
 @property (nonatomic, copy, readonly) NSArray<GHCRepoDTO *>     *repos;
 
-- (instancetype)initWithUser:(NSString *)userName
+- (instancetype)initWithLogin:(NSString *)login
                        repos:(NSArray<GHCRepoDTO *>*)repos;
 
 @end
