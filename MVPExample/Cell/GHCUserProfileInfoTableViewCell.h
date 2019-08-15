@@ -1,8 +1,8 @@
 //
-//  GHCUserInfoTableViewCell.h
+//  GHCUserProfileInfoTableViewCell.h
 //  MVPExample
 //
-//  Created by OUT-Grigorov-KI on 15/08/2019.
+//  Created by Кирилл Григоров on 16/08/2019.
 //  Copyright © 2019 Evgeny Shishko. All rights reserved.
 //
 
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface GHCUserInfoTableViewCell : UITableViewCell
+@interface GHCUserProfileInfoTableViewCell : UITableViewCell
 
 @end
 

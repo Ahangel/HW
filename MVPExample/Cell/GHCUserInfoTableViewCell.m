@@ -6,9 +6,9 @@
 //  Copyright © 2019 Evgeny Shishko. All rights reserved.
 //
 
-#import "GHCUserInfoTableViewCell.h"
+#import "GHCUserProfileInfoTableViewCell.h"
 
-@interface GHCUserInfoTableViewCell ()
+@interface GHCUserProfileInfoTableViewCell ()
 
 @property (nonatomic, strong) UIButton  *followersButton;
 @property (nonatomic, strong) UIButton  *followingButton;
@@ -17,7 +17,7 @@
 
 @end
 
-@implementation GHCUserInfoTableViewCell
+@implementation GHCUserProfileInfoTableViewCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style
               reuseIdentifier:(NSString *)reuseIdentifier {

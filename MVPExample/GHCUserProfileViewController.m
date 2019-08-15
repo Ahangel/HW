@@ -8,6 +8,7 @@
 
 #import "GHCUserProfileViewController.h"
 #import "GHCUserProfileInfoView.h"
+#import "GHCUserProfileInfoTableViewCell.h"
 
 @interface GHCUserProfileViewController ()
 
@@ -21,6 +22,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = UIColor.whiteColor;
+    [self.tableView registerClass:[GHCUserProfileInfoTableViewCell class] forCellReuseIdentifier:NSStringFromClass([GHCUserProfileInfoTableViewCell class])];
     [self createUserProfileInfoStackView];
     [self createTableView];
     
@@ -35,7 +37,7 @@
     self.userProfileInfoStackView.translatesAutoresizingMaskIntoConstraints = NO;
     
     [NSLayoutConstraint activateConstraints:@[
-                                              [self.userProfileInfoStackView.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor constant:-170],
+                                              [self.userProfileInfoStackView.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor constant:-150],
                                               [self.userProfileInfoStackView.leftAnchor constraintEqualToAnchor:self.view.leftAnchor ],
                                               [self.userProfileInfoStackView.rightAnchor constraintEqualToAnchor:self.view.rightAnchor ],
                                               [self.userProfileInfoStackView.heightAnchor constraintEqualToConstant:250]
@@ -51,7 +53,7 @@
     
     [NSLayoutConstraint activateConstraints:@[
                                               [self.tableView.topAnchor constraintEqualToAnchor:self.userProfileInfoStackView.bottomAnchor constant:40],
-                                              [self.tableView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor constant:-300],
+                                              [self.tableView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor constant:-180],
                                               [self.tableView.leftAnchor constraintEqualToAnchor:self.view.leftAnchor],
                                               [self.tableView.rightAnchor constraintEqualToAnchor:self.view.rightAnchor]
                                               ]];
@@ -68,10 +70,23 @@
 }
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                                   reuseIdentifier:NSStringFromClass([UITableViewCell class])];
-    cell.textLabel.text = @"ok";
-    return cell;
+    if (indexPath.row == 0) {
+        GHCUserProfileInfoTableViewCell *cell = [[GHCUserProfileInfoTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NSStringFromClass([GHCUserProfileInfoTableViewCell class])];
+        return cell;
+    } else {
+        UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NSStringFromClass([UITableViewCell class])];
+        cell.textLabel.text = @"ok";
+        return cell;
+    }
+//    GHCUserProfileInfoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([GHCUserProfileInfoTableViewCell class])];
+//    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+//                                                   reuseIdentifier:NSStringFromClass([UITableViewCell class])];
+    //cell.textLabel.text = @"ok";
+    //return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 80;
 }
 
 @end
