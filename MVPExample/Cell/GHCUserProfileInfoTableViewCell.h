@@ -12,6 +12,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface GHCUserProfileInfoTableViewCell : UITableViewCell
 
+- (instancetype)initWithStyle:(UITableViewCellStyle)style
+              reuseIdentifier:(NSString *)reuseIdentifier
+                 forIndexPath:(NSUInteger)indexPath;
+
 @end
 
 NS_ASSUME_NONNULL_END

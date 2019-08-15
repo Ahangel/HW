@@ -70,19 +70,17 @@
 }
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    
     if (indexPath.row == 0) {
-        GHCUserProfileInfoTableViewCell *cell = [[GHCUserProfileInfoTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NSStringFromClass([GHCUserProfileInfoTableViewCell class])];
+        GHCUserProfileInfoTableViewCell *cell = [[GHCUserProfileInfoTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NSStringFromClass([GHCUserProfileInfoTableViewCell class]) forIndexPath:0];
+        return cell;
+    } else if (indexPath.row == 1) {
+        GHCUserProfileInfoTableViewCell *cell = [[GHCUserProfileInfoTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NSStringFromClass([GHCUserProfileInfoTableViewCell class]) forIndexPath:1];
         return cell;
     } else {
-        UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NSStringFromClass([UITableViewCell class])];
-        cell.textLabel.text = @"ok";
+        GHCUserProfileInfoTableViewCell *cell = [[GHCUserProfileInfoTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NSStringFromClass([GHCUserProfileInfoTableViewCell class]) forIndexPath:2];
         return cell;
     }
-//    GHCUserProfileInfoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([GHCUserProfileInfoTableViewCell class])];
-//    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-//                                                   reuseIdentifier:NSStringFromClass([UITableViewCell class])];
-    //cell.textLabel.text = @"ok";
-    //return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
