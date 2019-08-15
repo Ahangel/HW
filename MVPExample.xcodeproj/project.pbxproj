@@ -3,10 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		464CAE8D23055B1100AD58DB /* GHCUserProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 464CAE8C23055B1100AD58DB /* GHCUserProfileViewController.m */; };
+		464CAE91230567F600AD58DB /* GHCUserProfileInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 464CAE90230567F600AD58DB /* GHCUserProfileInfoView.m */; };
+		464CAE9E2305A86D00AD58DB /* GHCUserInfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 464CAE9D2305A86D00AD58DB /* GHCUserInfoTableViewCell.m */; };
 		465C02B422F9640100DE6542 /* GHCSearchUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 465C02B322F9640100DE6542 /* GHCSearchUserViewController.m */; };
 		465C02B522F9640100DE6542 /* GHCSearchUserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 465C02B322F9640100DE6542 /* GHCSearchUserViewController.m */; };
 		465C02C722F9B9C800DE6542 /* GHCSearchUserPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 465C02C622F9B9C800DE6542 /* GHCSearchUserPresenter.m */; };
@@ -43,6 +46,12 @@
 /* Begin PBXFileReference section */
 		136E346A2505067F812077FC /* Pods-MVPExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MVPExample.debug.xcconfig"; path = "Target Support Files/Pods-MVPExample/Pods-MVPExample.debug.xcconfig"; sourceTree = "<group>"; };
 		1A77D2C6657E48054002E120 /* Pods-MVPExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MVPExample.release.xcconfig"; path = "Target Support Files/Pods-MVPExample/Pods-MVPExample.release.xcconfig"; sourceTree = "<group>"; };
+		464CAE8B23055B1100AD58DB /* GHCUserProfileViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GHCUserProfileViewController.h; sourceTree = "<group>"; };
+		464CAE8C23055B1100AD58DB /* GHCUserProfileViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GHCUserProfileViewController.m; sourceTree = "<group>"; };
+		464CAE8F230567F600AD58DB /* GHCUserProfileInfoView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GHCUserProfileInfoView.h; sourceTree = "<group>"; };
+		464CAE90230567F600AD58DB /* GHCUserProfileInfoView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GHCUserProfileInfoView.m; sourceTree = "<group>"; };
+		464CAE9C2305A86D00AD58DB /* GHCUserInfoTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GHCUserInfoTableViewCell.h; sourceTree = "<group>"; };
+		464CAE9D2305A86D00AD58DB /* GHCUserInfoTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GHCUserInfoTableViewCell.m; sourceTree = "<group>"; };
 		465C02B222F9640100DE6542 /* GHCSearchUserViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GHCSearchUserViewController.h; sourceTree = "<group>"; };
 		465C02B322F9640100DE6542 /* GHCSearchUserViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GHCSearchUserViewController.m; sourceTree = "<group>"; };
 		465C02C522F9B9C800DE6542 /* GHCSearchUserPresenter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GHCSearchUserPresenter.h; sourceTree = "<group>"; };
@@ -112,8 +121,60 @@
 				136E346A2505067F812077FC /* Pods-MVPExample.debug.xcconfig */,
 				1A77D2C6657E48054002E120 /* Pods-MVPExample.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		464CAE8823055AC400AD58DB /* UserProfile */ = {
+			isa = PBXGroup;
+			children = (
+				464CAE8A23055AE300AD58DB /* Presenter */,
+				464CAE8923055ADD00AD58DB /* View */,
+			);
+			name = UserProfile;
+			sourceTree = "<group>";
+		};
+		464CAE8923055ADD00AD58DB /* View */ = {
+			isa = PBXGroup;
+			children = (
+				464CAE8E230567C400AD58DB /* UserProfileInfo */,
+				464CAE8B23055B1100AD58DB /* GHCUserProfileViewController.h */,
+				464CAE8C23055B1100AD58DB /* GHCUserProfileViewController.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		464CAE8A23055AE300AD58DB /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Presenter;
+			sourceTree = "<group>";
+		};
+		464CAE8E230567C400AD58DB /* UserProfileInfo */ = {
+			isa = PBXGroup;
+			children = (
+				464CAE9B2305A84800AD58DB /* Cell */,
+				464CAE932305959000AD58DB /* UIView */,
+			);
+			name = UserProfileInfo;
+			sourceTree = "<group>";
+		};
+		464CAE932305959000AD58DB /* UIView */ = {
+			isa = PBXGroup;
+			children = (
+				464CAE8F230567F600AD58DB /* GHCUserProfileInfoView.h */,
+				464CAE90230567F600AD58DB /* GHCUserProfileInfoView.m */,
+			);
+			path = UIView;
+			sourceTree = "<group>";
+		};
+		464CAE9B2305A84800AD58DB /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				464CAE9C2305A86D00AD58DB /* GHCUserInfoTableViewCell.h */,
+				464CAE9D2305A86D00AD58DB /* GHCUserInfoTableViewCell.m */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		465C02C122F9B8D200DE6542 /* SearchUser */ = {
@@ -223,6 +284,7 @@
 		E027C7AC22F33A890056AAA0 /* MVPExample */ = {
 			isa = PBXGroup;
 			children = (
+				464CAE8823055AC400AD58DB /* UserProfile */,
 				465C02CB22FC1CF500DE6542 /* UserInfo */,
 				E027C7D122F33AD60056AAA0 /* Login */,
 				E027C7DA22F33B970056AAA0 /* Model */,
@@ -460,10 +522,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				464CAE9E2305A86D00AD58DB /* GHCUserInfoTableViewCell.m in Sources */,
 				E027C7D922F33B8D0056AAA0 /* GHCLoginPresenter.m in Sources */,
 				465C02B422F9640100DE6542 /* GHCSearchUserViewController.m in Sources */,
 				465C02DF22FDA78C00DE6542 /* GHCRepoDTO.m in Sources */,
 				465C02D022FC1D2E00DE6542 /* GHCUserInfoTableViewController.m in Sources */,
+				464CAE91230567F600AD58DB /* GHCUserProfileInfoView.m in Sources */,
 				E027C7BD22F33A8B0056AAA0 /* main.m in Sources */,
 				465C02DA22FC2E1B00DE6542 /* GHCNetworkService.m in Sources */,
 				E027C7AF22F33A890056AAA0 /* AppDelegate.m in Sources */,
@@ -472,6 +536,7 @@
 				465C02E32300532100DE6542 /* GHCUserInfoTableViewCell.m in Sources */,
 				E027C7DE22F33BE00056AAA0 /* GHCUserDTO.m in Sources */,
 				465C02C722F9B9C800DE6542 /* GHCSearchUserPresenter.m in Sources */,
+				464CAE8D23055B1100AD58DB /* GHCUserProfileViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
