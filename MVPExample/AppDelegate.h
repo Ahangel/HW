@@ -8,12 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@class GHCUserProfileViewController;
+
 @class GHCLoginViewController;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
-@property (strong, nonatomic) UIWindow              *window;
-@property (nonatomic, strong) GHCLoginViewController   *loginVC;
+@property (strong, nonatomic) UIWindow                      *window;
+@property (nonatomic, strong) GHCUserProfileViewController  *userInfoVC;
 
 @end
 

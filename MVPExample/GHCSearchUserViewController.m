@@ -14,10 +14,10 @@
 
 @interface GHCSearchUserViewController ()
 
-@property (nonatomic, strong) GHCSearchUserPresenter   *presenter;
-@property (nonatomic, strong) UILabel               *userNameLabel;
-@property (nonatomic, strong) UITextField           *nameField;
-@property (nonatomic, strong) UIButton              *showUserButton;
+@property (nonatomic, strong) GHCSearchUserPresenter    *presenter;
+@property (nonatomic, strong) UILabel                   *userNameLabel;
+@property (nonatomic, strong) UITextField               *nameField;
+@property (nonatomic, strong) UIButton                  *showUserButton;
 
 @end
 
@@ -75,8 +75,8 @@
     [NSLayoutConstraint activateConstraints:@[
                                               [self.userNameLabel.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
                                               [self.userNameLabel.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor constant:-90],
-                                              [self.userNameLabel.heightAnchor constraintEqualToConstant:50],
-                                              [self.userNameLabel.widthAnchor constraintEqualToConstant:200]
+                                              [self.userNameLabel.heightAnchor  constraintEqualToConstant:50],
+                                              [self.userNameLabel.widthAnchor   constraintEqualToConstant:200]
                                               ]];
     
 }
@@ -95,8 +95,8 @@
     [NSLayoutConstraint activateConstraints:@[
                                               [self.nameField.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
                                               [self.nameField.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor],
-                                              [self.nameField.heightAnchor constraintEqualToConstant:50],
-                                              [self.nameField.widthAnchor constraintEqualToConstant:200]
+                                              [self.nameField.heightAnchor  constraintEqualToConstant:50],
+                                              [self.nameField.widthAnchor   constraintEqualToConstant:200]
                                               ]];
     
     
@@ -114,10 +114,10 @@
     self.showUserButton.translatesAutoresizingMaskIntoConstraints = NO;
     
     [NSLayoutConstraint activateConstraints:@[
-                                              [self.showUserButton.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
-                                              [self.showUserButton.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor constant:90],
-                                              [self.showUserButton.heightAnchor constraintEqualToConstant:50],
-                                              [self.showUserButton.widthAnchor constraintEqualToConstant:150]
+                                              [self.showUserButton.centerXAnchor    constraintEqualToAnchor:self.view.centerXAnchor],
+                                              [self.showUserButton.centerYAnchor    constraintEqualToAnchor:self.view.centerYAnchor constant:90],
+                                              [self.showUserButton.heightAnchor     constraintEqualToConstant:50],
+                                              [self.showUserButton.widthAnchor      constraintEqualToConstant:150]
                                               ]];
     
 }

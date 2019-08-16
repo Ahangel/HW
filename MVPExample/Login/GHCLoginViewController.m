@@ -41,9 +41,10 @@
 
 #pragma mark - <LoginPresenterOutput>
 
-- (void)authorizationComplete {
-
-    [self showSearchUserViewController];
+- (void)authorizationComplete:(NSDictionary *)userDict {
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"LoginStatus"];
+    GHCUserProfileViewController *userProfileVC = [[GHCUserProfileViewController alloc] initWithDictionary:userDict];
+    [self.navigationController pushViewController:userProfileVC animated:YES];
 }
 
 - (void)showErrorWith:(NSString *)title message:(NSString *)message {
@@ -59,12 +60,6 @@
         strongSelf.passwordField.text = @"";
     }]];
     [self presentViewController:alert animated:YES completion:nil];
-}
-
-- (void)showSearchUserViewController {
-    
-    GHCUserProfileViewController *searchVC = [GHCUserProfileViewController new];
-    [self.navigationController pushViewController:searchVC animated:YES];
 }
 
 - (void)signInButtonTapped {
@@ -104,6 +99,7 @@
     
     self.loginField = [UITextField new];
     [self.view addSubview:self.loginField];
+    self.loginField.text = @"";
     self.loginField.textAlignment = NSTextAlignmentCenter;
     self.loginField.borderStyle = UITextBorderStyleRoundedRect;
     [self.loginField setBackgroundColor:[UIColor clearColor]];
@@ -121,6 +117,7 @@
     
     self.passwordField = [UITextField new];
     [self.view addSubview:self.passwordField];
+    self.passwordField.text = @"";
     self.passwordField.backgroundColor = UIColor.clearColor;
     self.passwordField.textAlignment = NSTextAlignmentCenter;
     self.passwordField.borderStyle = UITextBorderStyleRoundedRect;

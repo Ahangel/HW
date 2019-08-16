@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface GHCUserProfileViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
+- (instancetype)initWithDictionary:(NSDictionary *)userDict;
+
 @end
 
 NS_ASSUME_NONNULL_END

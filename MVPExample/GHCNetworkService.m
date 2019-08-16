@@ -10,12 +10,13 @@
 #import "GHCUserDTO.h"
 #import "GHCNetworkService.h"
 #import "GHCRepoDTO.h"
+#import <UIKit/UIKit.h>
 
 @implementation GHCNetworkService
 
 - (void)authorizeWithLogin:(NSString *)login
                   password:(NSString *)password
-                completion:(void(^)(NSError * _Nullable))completionBlock {
+                completion:(void(^)(NSDictionary * _Nullable, NSError * _Nullable))completionBlock {
     
     NSString *path = [NSString stringWithFormat:@"https://api.github.com/users/%@", login];
     NSURL *url = [NSURL URLWithString:path];
@@ -43,8 +44,7 @@
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request
                                                 completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
                                                     
-                                                    
-                                                    NSDictionary* responseData = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+                                                    NSMutableDictionary *responseData = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
                                                     
                                                     NSHTTPURLResponse *HTTPResponse = (NSHTTPURLResponse *)response;
                                                     NSInteger statusCode = [HTTPResponse statusCode];
@@ -52,15 +52,26 @@
                                                     NSError *responseError = [self errorWithStatusCodeCheck:statusCode responseData:responseData];
                                                     
                                                     if (error) {
-                                                        completionBlock(error);
+                                                        completionBlock(nil, error);
                                                         return;
                                                     }
                                                     if (responseError) {
-                                                        completionBlock(responseError);
+                                                        completionBlock(nil, responseError);
                                                         return;
                                                     }
                                                     
-                                                    completionBlock(nil);
+                                                    NSString *starredReposCounter = [self fetchStarredRepositoriesByLogin:login];
+                                                    
+                                                    [responseData setObject:starredReposCounter forKey:@"starred_repos"];
+
+                                                    dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                                                        NSURL *url = [NSURL URLWithString:responseData[@"avatar_url"]];
+                                                        NSData *data = [NSData dataWithContentsOfURL:url];
+                                                        UIImage *image = [[UIImage alloc] initWithData:data];
+                                                        
+                                                        [responseData setObject:image forKey:@"userImage"];
+                                                    });
+                                                    completionBlock([responseData copy],nil);
                                                     
                                                 }];
     [dataTask resume];
@@ -156,6 +167,28 @@
 
                                                 }];
     [dataTask resume];
+}
+
+- (NSString *)fetchStarredRepositoriesByLogin:(NSString *)userLogin {
+    
+    NSString *path = [NSString stringWithFormat:@"https://api.github.com/users/%@/starred", userLogin];
+    NSURL *url = [NSURL URLWithString:path];
+    
+    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url
+                                                           cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
+                                                       timeoutInterval:0];
+    NSURLSession *session = [NSURLSession sharedSession];
+    
+    __block NSUInteger starredReposCounter = 0;
+    
+    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request
+                                                completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                                                    
+                                                    NSArray *fetchUserStarredRepos = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+                                                    starredReposCounter = fetchUserStarredRepos.count;
+                                                }];
+    [dataTask resume];
+    return [NSString stringWithFormat:@"%lu",starredReposCounter];
 }
 
 - (nullable NSError *)errorWithStatusCodeCheck:(NSInteger)statusCode responseData:(id)responseData {

@@ -10,18 +10,26 @@
 
 @interface GHCUserProfileInfoView ()
 
-@property (nonatomic, strong) UIImageView   *userProfileImage;
-@property (nonatomic, strong) UILabel       *userNameLabel;
-@property (nonatomic, strong) UILabel       *userLoginLabel;
-@property (nonatomic, strong) UIView        *containerView;
+@property (nonatomic, strong)   UIImageView *userProfileImage;
+@property (nonatomic, strong)   UILabel     *userNameLabel;
+@property (nonatomic, strong)   UILabel     *userLoginLabel;
+@property (nonatomic, strong)   UIView      *containerView;
+@property (nonatomic, copy)     NSString    *userName;
+@property (nonatomic, copy)     NSString    *userLogin;
+@property (nonatomic, strong)   UIImage     *userImage;
 
 @end
 
 @implementation GHCUserProfileInfoView
 
-- (instancetype)init {
+- (instancetype)initWithUserName:(NSString *)userName
+                       userLogin:(NSString *)userLogin
+                       userImage:(UIImage *)userImage {
     self = [super init];
     if (self) {
+        _userName = userName;
+        _userLogin = userLogin;
+        _userImage = userImage;
         [self setupViews];
     }
     return self;
@@ -54,7 +62,7 @@
 - (void)createUserNameLabel {
     
     self.userNameLabel = [UILabel new];
-    self.userNameLabel.text = @"Bill Gates";
+    self.userNameLabel.text = self.userName;
     self.userNameLabel.backgroundColor = UIColor.clearColor;
     self.userNameLabel.font = [UIFont systemFontOfSize:20];
     [self.userNameLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
@@ -68,7 +76,7 @@
 - (void)createUserLoginLabel {
     
     self.userLoginLabel = [UILabel new];
-    self.userLoginLabel.text = @"iwannaflywithyou";
+    self.userLoginLabel.text = self.userLogin;
     self.userLoginLabel.backgroundColor = UIColor.clearColor;
     [self.userLoginLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self.userProfileInfo addArrangedSubview:self.userLoginLabel];
@@ -80,7 +88,8 @@
     [self createContainerView];
     
     self.userProfileImage = [UIImageView new];
-    [self.userProfileImage setImage:[UIImage imageNamed:@"267px-Bill_Gates_2018"]];
+    
+    [self.userProfileImage setImage: self.userImage];
     [self.containerView addSubview:self.userProfileImage];
     self.userProfileImage.layer.masksToBounds = YES;
     self.userProfileImage.layer.cornerRadius = 90;

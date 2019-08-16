@@ -8,8 +8,16 @@
 
 #import "AppDelegate.h"
 #import "GHCLoginViewController.h"
+#import "GHCUserProfileViewController.h"
 
 @interface AppDelegate ()
+
+@end
+
+@implementation NSURLRequest(DataController)
++ (BOOL)allowsAnyHTTPSCertificateForHost:(NSString *)host{
+    return YES;
+}
 
 @end
 
@@ -21,8 +29,18 @@
     self.window = [[UIWindow alloc] initWithFrame: UIScreen.mainScreen.bounds];
     [self.window makeKeyAndVisible];
     
-    self.loginVC = [[GHCLoginViewController alloc] init];
-    self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:self.loginVC];
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"LoginStatus"])
+    {
+        // user not logged in
+        GHCLoginViewController *rootViewController = [[GHCLoginViewController alloc] init];
+        self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:rootViewController];
+    }
+    else
+    {
+        // user already logged in
+        GHCUserProfileViewController *rootViewController = [[GHCUserProfileViewController alloc] init];
+        self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:rootViewController];
+    }
     
     return YES;
 }

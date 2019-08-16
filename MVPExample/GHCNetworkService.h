@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)authorizeWithLogin:(NSString *)login
                   password:(NSString *)password
-                completion:(void(^)(NSError * _Nullable))comletionBlock;
+                completion:(void(^)(NSDictionary * _Nullable, NSError * _Nullable))comletionBlock;
 
 - (void)searchUserWithLogin:(NSString *)login
                  completion:(void(^)(GHCUserDTO * _Nullable, NSError * _Nullable))completionBlock;

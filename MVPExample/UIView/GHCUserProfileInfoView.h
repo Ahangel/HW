@@ -14,6 +14,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) UIStackView   *userProfileInfo;
 
+- (instancetype)initWithUserName:(NSString *)userName
+                       userLogin:(NSString *)userLogin
+                       userImage:(UIImage *)userImage;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol GHCLoginPresenterOutput <NSObject>
 
-- (void)authorizationComplete;
+- (void)authorizationComplete:(NSDictionary *)userDict;
 - (void)showErrorWith:(NSString *)title message:(NSString *)message;
 
 @end

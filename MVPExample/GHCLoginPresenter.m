@@ -43,7 +43,7 @@
     
     [self.networkService authorizeWithLogin:userInfo[@"login"]
                                    password:userInfo[@"password"]
-                                 completion:^(NSError * _Nullable error) {
+                                 completion:^(NSDictionary * _Nullable userDict, NSError * _Nullable error) {
                                      
                                      __strong typeof(self) strongSelf = weakSelf;
                                      
@@ -57,7 +57,7 @@
                                          return;
                                      }
                                      dispatch_async(dispatch_get_main_queue(), ^{
-                                         [strongSelf.output authorizationComplete];
+                                         [strongSelf.output authorizationComplete:userDict];
                                      });
                                  }];
 }

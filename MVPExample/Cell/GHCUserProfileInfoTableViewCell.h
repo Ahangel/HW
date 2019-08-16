@@ -14,6 +14,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style
               reuseIdentifier:(NSString *)reuseIdentifier
+             followersCounter:(NSString *)followersCounter
+             followingCounter:(NSString *)followingCounter
+          repositoriesCounter:(NSString *)repositoriesCounter
+   starredRepositoriesCounter:(NSString *)starredRepositoriesCounter
                  forIndexPath:(NSUInteger)indexPath;
 
 @end

@@ -10,10 +10,14 @@
 
 @interface GHCUserProfileInfoTableViewCell ()
 
-@property (nonatomic, strong) UIButton  *followersButton;
-@property (nonatomic, strong) UIButton  *followingButton;
-@property (nonatomic, strong) UILabel   *repositoriesLabel;
-@property (nonatomic, strong) UILabel   *starredRepositoriesLabel;
+@property (nonatomic, strong)   UIButton    *followersButton;
+@property (nonatomic, strong)   UIButton    *followingButton;
+@property (nonatomic, strong)   UILabel     *repositoriesLabel;
+@property (nonatomic, strong)   UILabel     *starredRepositoriesLabel;
+@property (nonatomic, copy)     NSString    *followersCounter;
+@property (nonatomic, copy)     NSString    *followingCounter;
+@property (nonatomic, copy)     NSString    *repositoriesCounter;
+@property (nonatomic, copy)     NSString    *starredRepositoriesCounter;
 
 @end
 
@@ -21,17 +25,30 @@
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style
               reuseIdentifier:(NSString *)reuseIdentifier
-                         forIndexPath:(NSUInteger)indexPath
+             followersCounter:(NSString *)followersCounter
+             followingCounter:(NSString *)followingCounter
+          repositoriesCounter:(NSString *)repositoriesCounter
+   starredRepositoriesCounter:(NSString *)starredRepositoriesCounter
+                 forIndexPath:(NSUInteger)indexPath
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    
     if (self && indexPath == 0) {
+        
+        _followersCounter = followersCounter;
+        _followingCounter = followingCounter;
+        
         [self setupFollowersButton];
         [self setupFollowingButton];
         return self;
+        
     } else if (self && indexPath == 1) {
+        _repositoriesCounter = repositoriesCounter;
         [self setupRepositoriesLabel];
         return self;
+        
     } else if (self && indexPath == 2) {
+        _starredRepositoriesCounter = starredRepositoriesCounter;
         [self setupStarredRepositories];
         return self;
     }
@@ -50,15 +67,16 @@
     
     self.followersButton = [UIButton buttonWithType:UIButtonTypeSystem];
     [self.contentView addSubview:self.followersButton];
-    [self.followersButton setTitle:@"Followers" forState:UIControlStateNormal];
+    [self.followersButton setTitle:[NSString stringWithFormat:@"%@ Followers", self.followersCounter] forState:UIControlStateNormal];
     self.followersButton.titleLabel.font = [UIFont systemFontOfSize:18];
-    self.followersButton.backgroundColor = UIColor.grayColor;
+    [self.followersButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+
+    self.followersButton.backgroundColor = UIColor.clearColor;
     self.followersButton.translatesAutoresizingMaskIntoConstraints = NO;
     [NSLayoutConstraint activateConstraints:@[
-                                              [self.followersButton.centerXAnchor constraintEqualToAnchor:self.contentView.centerXAnchor constant:-90],
-                                              [self.followersButton.centerYAnchor constraintEqualToAnchor:self.contentView.centerYAnchor],
-                                              [self.followersButton.heightAnchor constraintEqualToConstant:60],
-                                              [self.followersButton.widthAnchor constraintEqualToConstant:160]
+                                              [self.followersButton.leftAnchor      constraintEqualToAnchor:self.contentView.leftAnchor],
+                                              [self.followersButton.rightAnchor     constraintEqualToAnchor:self.contentView.centerXAnchor],
+                                              [self.followersButton.centerYAnchor   constraintEqualToAnchor:self.contentView.centerYAnchor],
                                               ]];
     
 }
@@ -67,15 +85,16 @@
     
     self.followingButton = [UIButton buttonWithType:UIButtonTypeSystem];
     [self.contentView addSubview:self.followingButton];
-    [self.followingButton setTitle:@"Following" forState:UIControlStateNormal];
+    [self.followingButton setTitle:[NSString stringWithFormat:@"%@ Following", self.followingCounter] forState:UIControlStateNormal];
     self.followingButton.titleLabel.font = [UIFont systemFontOfSize:18];
-    self.followingButton.backgroundColor = UIColor.grayColor;
+    [self.followingButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    self.followingButton.backgroundColor = UIColor.clearColor;
     self.followingButton.translatesAutoresizingMaskIntoConstraints = NO;
     [NSLayoutConstraint activateConstraints:@[
-                                              [self.followingButton.centerXAnchor constraintEqualToAnchor:self.contentView.centerXAnchor constant:100],
-                                              [self.followingButton.centerYAnchor constraintEqualToAnchor:self.contentView.centerYAnchor],
-                                              [self.followingButton.heightAnchor constraintEqualToConstant:60],
-                                              [self.followingButton.widthAnchor constraintEqualToConstant:160]
+                                              [self.followingButton.leftAnchor      constraintEqualToAnchor:self.contentView.centerXAnchor],
+                                              [self.followingButton.rightAnchor     constraintEqualToAnchor:self.contentView.rightAnchor],
+                                              [self.followingButton.centerYAnchor   constraintEqualToAnchor:self.contentView.centerYAnchor],
+                                              [self.followingButton.heightAnchor    constraintEqualToConstant:60],
                                               ]];
 
 }
@@ -84,17 +103,17 @@
     
     self.repositoriesLabel = [UILabel new];
     [self.contentView addSubview:self.repositoriesLabel];
-    self.repositoriesLabel.text = @"Repositories";
-    self.repositoriesLabel.backgroundColor = UIColor.grayColor;
+    self.repositoriesLabel.text = [NSString stringWithFormat:@"%@ Repositories", self.repositoriesCounter];
+    self.repositoriesLabel.backgroundColor = UIColor.clearColor;
     self.repositoriesLabel.font = [UIFont systemFontOfSize:18];
     self.repositoriesLabel.textAlignment = NSTextAlignmentCenter;
     self.repositoriesLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [NSLayoutConstraint activateConstraints:@[
                                               [self.repositoriesLabel.centerYAnchor constraintEqualToAnchor:self.contentView.centerYAnchor],
                                               [self.repositoriesLabel.centerXAnchor constraintEqualToAnchor:self.contentView.centerXAnchor],
-                                              [self.repositoriesLabel.heightAnchor constraintEqualToConstant:80],
-                                              [self.repositoriesLabel.leftAnchor constraintEqualToAnchor:self.contentView.leftAnchor],
-                                              [self.repositoriesLabel.rightAnchor constraintEqualToAnchor:self.contentView.rightAnchor]
+                                              [self.repositoriesLabel.heightAnchor  constraintEqualToConstant:80],
+                                              [self.repositoriesLabel.leftAnchor    constraintEqualToAnchor:self.contentView.leftAnchor],
+                                              [self.repositoriesLabel.rightAnchor   constraintEqualToAnchor:self.contentView.rightAnchor]
                                               ]];
 }
 
@@ -102,17 +121,17 @@
     
     self.starredRepositoriesLabel = [UILabel new];
     [self.contentView addSubview:self.starredRepositoriesLabel];
-    self.starredRepositoriesLabel.text = @"Starred Repositories";
-    self.starredRepositoriesLabel.backgroundColor = UIColor.grayColor;
+    self.starredRepositoriesLabel.text = [NSString stringWithFormat:@"%@ Starred Repositories", self.starredRepositoriesCounter];
+    self.starredRepositoriesLabel.backgroundColor = UIColor.clearColor;
     self.starredRepositoriesLabel.font = [UIFont systemFontOfSize:18];
     self.starredRepositoriesLabel.textAlignment = NSTextAlignmentCenter;
     self.starredRepositoriesLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [NSLayoutConstraint activateConstraints:@[
-                                              [self.starredRepositoriesLabel.centerYAnchor constraintEqualToAnchor:self.contentView.centerYAnchor],
-                                              [self.starredRepositoriesLabel.centerXAnchor constraintEqualToAnchor:self.contentView.centerXAnchor],
-                                              [self.starredRepositoriesLabel.heightAnchor constraintEqualToConstant:80],
-                                              [self.starredRepositoriesLabel.leftAnchor constraintEqualToAnchor:self.contentView.leftAnchor],
-                                              [self.starredRepositoriesLabel.rightAnchor constraintEqualToAnchor:self.contentView.rightAnchor]
+                                              [self.starredRepositoriesLabel.centerYAnchor  constraintEqualToAnchor:self.contentView.centerYAnchor],
+                                              [self.starredRepositoriesLabel.centerXAnchor  constraintEqualToAnchor:self.contentView.centerXAnchor],
+                                              [self.starredRepositoriesLabel.heightAnchor   constraintEqualToConstant:80],
+                                              [self.starredRepositoriesLabel.leftAnchor     constraintEqualToAnchor:self.contentView.leftAnchor],
+                                              [self.starredRepositoriesLabel.rightAnchor    constraintEqualToAnchor:self.contentView.rightAnchor]
                                               ]];
 }
 
