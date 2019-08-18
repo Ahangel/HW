@@ -17,7 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
                 completion:(void(^)(NSDictionary * _Nullable, NSError * _Nullable))comletionBlock;
 
 - (void)searchUserWithLogin:(NSString *)login
-                 completion:(void(^)(GHCUserDTO * _Nullable, NSError * _Nullable))completionBlock;
+                       page:(NSUInteger)page
+                 completion:(void(^)(NSArray * _Nullable, NSError * _Nullable))completionBlock;
 
 @end
 

@@ -1,38 +1,40 @@
 //
-//  SearchUserPresenter.m
+//  GHCSearchPresenter.m
 //  MVPExample
 //
-//  Created by OUT-Grigorov-KI on 06/08/2019.
+//  Created by Кирилл Григоров on 18/08/2019.
 //  Copyright © 2019 Evgeny Shishko. All rights reserved.
 //
 
-#import "GHCSearchUserPresenter.h"
-#import "GHCSearchUserPresenterOutput.h"
+#import "GHCSearchPresenter.h"
 #import "GHCNetworkService.h"
 #import "GHCUserDTO.h"
+#import "GHCSearchPresenterOutput.h"
 
-@interface GHCSearchUserPresenter ()
+@interface GHCSearchPresenter ()
 
 @property (nonatomic, strong) GHCNetworkService *networkService;
 
 @end
 
-@implementation GHCSearchUserPresenter
+@implementation GHCSearchPresenter
 
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _networkService = [GHCNetworkService new];
+        _networkService = [[GHCNetworkService alloc] init];
     }
     return self;
 }
 
-- (void)searchUserWithName:(NSString *)login {
+- (void)searchUserWithLogin:(NSString *)userLogin
+                       page:(NSUInteger)page {
     
     __weak typeof(self) weakSelf = self;
     
-    [self.networkService searchUserWithLogin:login
-                                 completion:^(GHCUserDTO *model, NSError * _Nullable error) {
+    [self.networkService searchUserWithLogin:userLogin
+                                        page:page
+                                  completion:^(NSArray * _Nullable users, NSError * _Nullable error) {
                                      
                                      __strong typeof(self) strongSelf = weakSelf;
                                      
@@ -46,7 +48,7 @@
                                          return;
                                      }
                                      dispatch_async(dispatch_get_main_queue(), ^{
-                                         [strongSelf.output searchIsComplete:model];
+                                         [strongSelf.output searchComplete:users];
                                      });
                                  }];
 }

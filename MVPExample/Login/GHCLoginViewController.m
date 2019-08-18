@@ -10,7 +10,6 @@
 #import "GHCLoginPresenter.h"
 #import "AppDelegate.h"
 #import "GHCUserDTO.h"
-#import "GHCSearchUserViewController.h"
 #import "GHCUserProfileViewController.h"
 
 @interface GHCLoginViewController ()
@@ -43,6 +42,7 @@
 
 - (void)authorizationComplete:(NSDictionary *)userDict {
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"LoginStatus"];
+    
     GHCUserProfileViewController *userProfileVC = [[GHCUserProfileViewController alloc] initWithDictionary:userDict];
     [self.navigationController pushViewController:userProfileVC animated:YES];
 }

@@ -9,8 +9,8 @@
 #import "GHCUserProfileViewController.h"
 #import "GHCUserProfileInfoView.h"
 #import "GHCUserProfileInfoTableViewCell.h"
-#import "GHCSearchUserViewController.h"
 #import "GHCLoginViewController.h"
+#import "GHCSearchViewController.h"
 
 @interface GHCUserProfileViewController ()
 
@@ -68,7 +68,7 @@
 }
 
 - (void)showSearchUserViewController {
-    GHCSearchUserViewController *searchUserProfileVC = [GHCSearchUserViewController new];
+    GHCSearchViewController *searchUserProfileVC = [GHCSearchViewController new];
     [self.navigationController pushViewController:searchUserProfileVC animated:YES];
 }
 

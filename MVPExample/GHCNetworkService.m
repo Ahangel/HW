@@ -26,10 +26,10 @@
                                                        timeoutInterval:0];
     
     [FXKeychain defaultKeychain][@"password"] = password;
-    
+    [FXKeychain defaultKeychain][@"login"] = login;
     NSURLSession *session = [NSURLSession sharedSession];
     
-    NSString *authStr = [NSString stringWithFormat:@"%@:%@",login, [FXKeychain defaultKeychain][@"password"]];// @"username:password";
+    NSString *authStr = [NSString stringWithFormat:@"%@:%@",[FXKeychain defaultKeychain][@"login"], [FXKeychain defaultKeychain][@"password"]];// @"username:password";
     
     NSData *authData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
     
@@ -78,15 +78,28 @@
 }
 
 - (void)searchUserWithLogin:(NSString *)login
-                completion:(void(^)(GHCUserDTO * _Nullable, NSError * _Nullable))completionBlock {
+                       page:(NSUInteger)page
+                completion:(void(^)(NSArray * _Nullable, NSError * _Nullable))completionBlock {
     
-    NSString *path = [NSString stringWithFormat:@"https://api.github.com/users/%@", login];
+    NSString *path = [NSString stringWithFormat:@"https://api.github.com/search/users?q=%@+in:login&page=%lu&per_page=13", login, page];
     NSURL *url = [NSURL URLWithString:path];
     
     NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url
                                                            cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
                                                        timeoutInterval:0];
     NSURLSession *session = [NSURLSession sharedSession];
+    
+    NSString *authStr = [NSString stringWithFormat:@"%@:%@",[FXKeychain defaultKeychain][@"login"], [FXKeychain defaultKeychain][@"password"]];// @"username:password";
+    
+    NSData *authData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
+    
+    
+    NSString *authValue = [NSString stringWithFormat: @"Basic %@",[authData base64EncodedStringWithOptions:0]];
+    NSString *postLength = [NSString stringWithFormat:@"application/json"];
+    
+    [request setValue:authValue forHTTPHeaderField:@"Authorization"];
+    [request setValue:postLength forHTTPHeaderField:@"Content-Type"];
+    [request setValue:postLength forHTTPHeaderField:@"Accept"];
     
     __weak typeof(self) weakSelf = self;
     
@@ -100,7 +113,12 @@
                                                     NSHTTPURLResponse *HTTPResponse = (NSHTTPURLResponse *)response;
                                                     NSInteger statusCode = [HTTPResponse statusCode];
                                                     
+                                                    NSDictionary *dic = [HTTPResponse allHeaderFields];
+                                                    NSLog(@"%@", dic[@"Access-Control-Expose-Headers"]);
+                                                    
                                                     NSError *responseError = [strongSelf errorWithStatusCodeCheck:statusCode responseData:searchUserInfo];
+                                                    
+                                                    NSLog(@"%@", searchUserInfo);
                                                     
                                                     if (error) {
                                                         completionBlock(nil, error);
@@ -110,12 +128,17 @@
                                                         completionBlock(nil, responseError);
                                                         return;
                                                     }
-                                      
-                                                    NSString *login = searchUserInfo[@"login"];
-                                                    [strongSelf fetchRepositoriesWithLogin:login completion:^(NSArray<GHCRepoDTO *> *repos, NSError * error) {
-                                                        GHCUserDTO *model = [[GHCUserDTO alloc] initWithLogin:login repos:repos];
-                                                        completionBlock(model, nil);
-                                                    }];
+                                                    
+                                                    NSMutableArray *array = searchUserInfo[@"items"];
+                                                    NSMutableArray *users = [NSMutableArray new];
+                                                    
+                                                    for (NSDictionary *dict in array) {
+                                                        
+                                                        NSString *login = dict[@"login"];
+                                                        [users addObject:login];
+                                                    }
+                                                    NSLog(@"%@", users);
+                                                    completionBlock([users copy], nil);
                                                 }];
     [dataTask resume];
 }
