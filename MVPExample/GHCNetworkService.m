@@ -90,13 +90,13 @@
     NSURLSession *session = [NSURLSession sharedSession];
     
     NSString *authStr = [NSString stringWithFormat:@"%@:%@",[FXKeychain defaultKeychain][@"login"], [FXKeychain defaultKeychain][@"password"]];// @"username:password";
-    
+
     NSData *authData = [authStr dataUsingEncoding:NSUTF8StringEncoding];
-    
-    
+
+
     NSString *authValue = [NSString stringWithFormat: @"Basic %@",[authData base64EncodedStringWithOptions:0]];
     NSString *postLength = [NSString stringWithFormat:@"application/json"];
-    
+
     [request setValue:authValue forHTTPHeaderField:@"Authorization"];
     [request setValue:postLength forHTTPHeaderField:@"Content-Type"];
     [request setValue:postLength forHTTPHeaderField:@"Accept"];
@@ -135,14 +135,62 @@
                                                         NSString *login = dict[@"login"];
                                                         [users addObject:login];
                                                     }
+                                                    [users addObject:[NSString stringWithFormat:@"%@", searchUserInfo[@"total_count"]]];
                                                     NSLog(@"%@", users);
                                                     completionBlock([users copy], nil);
                                                 }];
     [dataTask resume];
 }
 
+- (void)fetchUserWithLogin:(NSString *)login
+                completion:(void(^)(NSDictionary * _Nullable, NSError * _Nullable))completionBlock {
+    
+    NSString *path = [NSString stringWithFormat:@"https://api.github.com/users/%@", login];
+    NSURL *url = [NSURL URLWithString:path];
+    
+    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url
+                                                           cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
+                                                       timeoutInterval:0];
+    
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request
+                                                completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                                                    
+                                                    NSMutableDictionary *responseData = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+                                                    
+                                                    NSHTTPURLResponse *HTTPResponse = (NSHTTPURLResponse *)response;
+                                                    NSInteger statusCode = [HTTPResponse statusCode];
+                                                    
+                                                    NSError *responseError = [self errorWithStatusCodeCheck:statusCode responseData:responseData];
+                                                    
+                                                    if (error) {
+                                                        completionBlock(nil, error);
+                                                        return;
+                                                    }
+                                                    if (responseError) {
+                                                        completionBlock(nil, responseError);
+                                                        return;
+                                                    }
+                                                    
+                                                    NSString *starredReposCounter = [self fetchStarredRepositoriesByLogin:login];
+                                                    
+                                                    [responseData setObject:starredReposCounter forKey:@"starred_repos"];
+                                                    
+                                                    dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                                                        NSURL *url = [NSURL URLWithString:responseData[@"avatar_url"]];
+                                                        NSData *data = [NSData dataWithContentsOfURL:url];
+                                                        UIImage *image = [[UIImage alloc] initWithData:data];
+                                                        
+                                                        [responseData setObject:image forKey:@"userImage"];
+                                                    });
+                                                    completionBlock([responseData copy],nil);
+                                                    
+                                                }];
+    [dataTask resume];
+}
+
 - (void)fetchRepositoriesWithLogin:(NSString *)login
-                        completion:(void(^)(NSArray * _Nullable, NSError * _Nullable))completionBlock {
+                        completion:(void(^)(GHCUserDTO * _Nullable, NSError * _Nullable))completionBlock {
     
     NSString *path = [NSString stringWithFormat:@"https://api.github.com/users/%@/repos", login];
     NSURL *url = [NSURL URLWithString:path];

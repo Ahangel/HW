@@ -53,6 +53,30 @@
                                  }];
 }
 
+- (void)fetchUserWithLogin:(NSString *)login {
+    
+    __weak typeof(self) weakSelf = self;
+    
+    [self.networkService fetchUserWithLogin:login
+                                 completion:^(NSDictionary * _Nullable userDict, NSError * _Nullable error) {
+                                     
+                                     __strong typeof(self) strongSelf = weakSelf;
+                                     
+                                     if (error) {
+                                         
+                                         NSString *code = [NSString stringWithFormat:@"Error: %lu", error.code];
+                                         NSString *message = [error.localizedDescription copy];
+                                         dispatch_async(dispatch_get_main_queue(), ^{
+                                             [strongSelf.output showErrorWith:code message:message];
+                                         });
+                                         return;
+                                     }
+                                     dispatch_async(dispatch_get_main_queue(), ^{
+                                         [strongSelf.output fetchComplete:userDict];
+                                     });
+                                 }];
+}
+
 - (void)addUserToSearchArrayWithLogin:(NSString *)userLogin
                                  page:(NSUInteger)page {
     

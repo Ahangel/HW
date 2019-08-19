@@ -23,6 +23,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)addUserToSearchArrayWithLogin:(NSString *)userLogin
                                  page:(NSUInteger)page;
+
+- (void)fetchUserWithLogin:(NSString *)login;
+
 @end
 
 NS_ASSUME_NONNULL_END

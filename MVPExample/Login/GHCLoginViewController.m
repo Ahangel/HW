@@ -49,10 +49,19 @@
 
 - (void)authorizationComplete:(NSDictionary *)userDict {
     //[[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"LoginStatus"];
-    [[NSUserDefaults standardUserDefaults] setObject:UIImagePNGRepresentation([UIImage imageNamed:@"yourimage.png"])forKey:@"userImage"];
     
     GHCUserProfileViewController *userProfileVC = [[GHCUserProfileViewController alloc] initWithDictionary:userDict];
+    UIBarButtonItem *exitBarButton = [[UIBarButtonItem alloc] initWithTitle:@"Sign Out"
+                                                                      style:UIBarButtonItemStylePlain
+                                                                     target:self
+                                                                     action:@selector(deleteUserAndShowLoginViewController)];
+    userProfileVC.navigationItem.leftBarButtonItem = exitBarButton;
     [self.navigationController pushViewController:userProfileVC animated:YES];
+}
+
+- (void)deleteUserAndShowLoginViewController {
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"LoginStatus"];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (void)showErrorWith:(NSString *)title message:(NSString *)message {

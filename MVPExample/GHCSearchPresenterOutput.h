@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)searchComplete:(NSArray *)users;
 - (void)showErrorWith:(NSString *)title message:(NSString *)message;
 - (void)addingToSearchResult:(NSArray *)users;
+- (void)fetchComplete:(NSDictionary *)user;
 
 @end
 

@@ -11,9 +11,12 @@
 #import "GHCUserProfileInfoTableViewCell.h"
 #import "GHCLoginViewController.h"
 #import "GHCSearchViewController.h"
+#import "GHCUserInfoTableViewController.h"
+#import "GHCUserProfilePresenter.h"
 
 @interface GHCUserProfileViewController ()
 
+@property (nonatomic, strong)   GHCUserProfilePresenter   *presenter;
 @property (nonatomic, strong)   GHCUserProfileInfoView    *userProfileInfoStackView;
 @property (nonatomic, strong)   UITableView               *tableView;
 @property (nonatomic, copy)     NSString                  *followersCounter;
@@ -49,7 +52,6 @@
     [self createUserProfileInfoStackView];
     [self createTableView];
     [self createSearchBarButton];
-    [self createExitButton];
 }
 
 - (void)createSearchBarButton {
@@ -59,22 +61,9 @@
     self.navigationItem.rightBarButtonItem = searchBarButton;
 }
 
-- (void)createExitButton {
-    UIBarButtonItem *exitBarButton = [[UIBarButtonItem alloc] initWithTitle:@"Sign Out"
-                                                                      style:UIBarButtonItemStyleDone
-                                                                     target:self
-                                                                     action:@selector(deleteUserAndShowLoginViewController)];
-    self.navigationItem.leftBarButtonItem = exitBarButton;
-}
-
 - (void)showSearchUserViewController {
     GHCSearchViewController *searchUserProfileVC = [GHCSearchViewController new];
     [self.navigationController pushViewController:searchUserProfileVC animated:YES];
-}
-
-- (void)deleteUserAndShowLoginViewController {
-    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"LoginStatus"];
-    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (void)createUserProfileInfoStackView {
@@ -139,6 +128,8 @@
                                                                                    repositoriesCounter:self.publicReposCounter
                                                                             starredRepositoriesCounter:self.starredRepositoriesCounter
                                                                                           forIndexPath:1];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+
         return cell;
     } else {
         GHCUserProfileInfoTableViewCell *cell = [[GHCUserProfileInfoTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
@@ -148,6 +139,8 @@
                                                                                    repositoriesCounter:self.publicReposCounter
                                                                             starredRepositoriesCounter:self.starredRepositoriesCounter
                                                                                           forIndexPath:2];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+
         return cell;
     }
 }
@@ -156,4 +149,15 @@
     return 80;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self.presenter fetchReposWithLogin:self.userLogin];
+}
+
+- (void)fetchComplete:(GHCUserDTO *)user {
+    
+}
+
+- (void)showErrorWith:(NSString *)title message:(NSString *)message {
+    
+}
 @end

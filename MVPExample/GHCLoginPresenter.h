@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "GHCLoginViewController.h"
 
-
 @protocol GHCLoginPresenterOutput;
 @class GHCUserDTO;
 

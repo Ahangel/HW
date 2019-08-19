@@ -20,6 +20,12 @@ NS_ASSUME_NONNULL_BEGIN
                        page:(NSUInteger)page
                  completion:(void(^)(NSArray * _Nullable, NSError * _Nullable))completionBlock;
 
+- (void)fetchUserWithLogin:(NSString *)login
+                completion:(void(^)(NSDictionary * _Nullable, NSError * _Nullable))completionBlock;
+
+- (void)fetchRepositoriesWithLogin:(NSString *)login
+                        completion:(void(^)(GHCUserDTO * _Nullable, NSError * _Nullable))completionBlock;
+
 @end
 
 NS_ASSUME_NONNULL_END

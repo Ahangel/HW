@@ -9,6 +9,7 @@
 #import "GHCSearchViewController.h"
 #import "GHCSearchPresenter.h"
 #import "GHCUserDTO.h"
+#import "GHCUserProfileViewController.h"
 
 @interface GHCSearchViewController ()
 
@@ -18,6 +19,7 @@
 @property (nonatomic, strong) NSMutableArray<NSString *>        *searchResult;
 @property (nonatomic, strong) NSMutableArray<NSString *>        *tableDataResult;
 @property (nonatomic, assign) NSUInteger                        pageCounter;
+@property (nonatomic, assign) NSUInteger                        totalCounter;
 @property (nonatomic, assign) NSUInteger                        searchBarTextLength;
 
 @end
@@ -37,7 +39,6 @@
     self.presenter.output = self;
 }
 
-
 #pragma mark - TableView Data Source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -53,19 +54,20 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([UITableViewCell class])];
 
     if (!cell) {
-         UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NSStringFromClass([UITableViewCell class])];
+        UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NSStringFromClass([UITableViewCell class])];
 
-            cell.textLabel.text = [self.searchResult objectAtIndex:indexPath.row];
-            return cell;
+        cell.textLabel.text = [self.searchResult objectAtIndex:indexPath.row];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        return cell;
     }
 
     cell.textLabel.text = self.searchResult[indexPath.row];
-
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == self.searchResult.count - 1 && self.searchBarTextLength >= 2) {
+    if (indexPath.row == self.searchResult.count - 1 && self.totalCounter >= 19) {
         self.pageCounter++;
         [self.presenter addUserToSearchArrayWithLogin:self.searchBar.text page:self.pageCounter];
     }
@@ -74,6 +76,10 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     
     return @"Results:";
+}
+
+- (void) tableView: (UITableView *) tableView didSelectRowAtIndexPath: (NSIndexPath *) indexPath {
+    [self.presenter fetchUserWithLogin:self.searchResult[indexPath.row]];
 }
 
 #pragma mark - SearchBar Delegate
@@ -91,32 +97,6 @@
     }
 }
 
-#pragma mark - <GHCSearchViewPresenterOutput>
-
-- (void)searchComplete:(nonnull NSArray *)users {
-    
-    self.searchResult = [users mutableCopy];
-    [self.tableView reloadData];
-}
-
-- (void)showErrorWith:(NSString *)title message:(NSString *)message {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:title
-                                                                   message:message
-                                                            preferredStyle:UIAlertControllerStyleAlert];
-    [alert addAction:[UIAlertAction actionWithTitle:@"OK"
-                                              style:UIAlertActionStyleDefault
-                                            handler:^(UIAlertAction * _Nonnull action) {
-                                            }]];
-    [self presentViewController:alert animated:YES completion:nil];
-}
-
-- (void)addingToSearchResult:(NSArray *)users {
-    
-    [self.searchResult addObjectsFromArray:users];
-    [self.tableView reloadData];
-}
-
-
 //-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 //{
 //    [searchBar resignFirstResponder];
@@ -132,6 +112,44 @@
 //    [self.tableView reloadData];
 //}
 
+#pragma mark - <GHCSearchViewPresenterOutput>
+
+- (void)searchComplete:(nonnull NSArray *)users {
+    
+    self.searchResult = [users mutableCopy];
+    self.totalCounter = [[self.searchResult objectAtIndex:self.searchResult.count - 1] integerValue];
+    [self.searchResult removeLastObject];
+    [self.tableView reloadData];
+}
+
+- (void)addingToSearchResult:(NSArray *)users {
+    
+    [self.searchResult addObjectsFromArray:users];
+    [self.searchResult removeLastObject];
+    [self.tableView reloadData];
+}
+
+- (void)showErrorWith:(NSString *)title message:(NSString *)message {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:title
+                                                                   message:message
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:@"OK"
+                                              style:UIAlertActionStyleDefault
+                                            handler:^(UIAlertAction * _Nonnull action) {
+                                            }]];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (void)fetchComplete:(NSDictionary *)user {
+    GHCUserProfileViewController *userProfile = [[GHCUserProfileViewController alloc] initWithDictionary:user];
+    userProfile.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(goBackToSearchVC)];
+    [self.navigationController pushViewController:userProfile animated:YES];
+}
+
+- (void)goBackToSearchVC {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 #pragma mark - Setup Views
 
 - (void)setupViews {
@@ -143,6 +161,7 @@
     self.tableView = [[UITableView alloc] init];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    self.tableView.tableFooterView = [[UIView alloc] init];
 
     [self.view addSubview:self.tableView];
     
