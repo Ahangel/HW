@@ -38,10 +38,18 @@
     self.presenter.output = self;
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.passwordField.text = @"";
+    self.loginField.text = @"";
+}
+
 #pragma mark - <LoginPresenterOutput>
 
 - (void)authorizationComplete:(NSDictionary *)userDict {
-    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"LoginStatus"];
+    //[[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"LoginStatus"];
+    [[NSUserDefaults standardUserDefaults] setObject:UIImagePNGRepresentation([UIImage imageNamed:@"yourimage.png"])forKey:@"userImage"];
     
     GHCUserProfileViewController *userProfileVC = [[GHCUserProfileViewController alloc] initWithDictionary:userDict];
     [self.navigationController pushViewController:userProfileVC animated:YES];
@@ -56,7 +64,7 @@
                                               style:UIAlertActionStyleDefault
                                             handler:^(UIAlertAction * _Nonnull action) {
         __strong typeof(self) strongSelf = weakSelf;
-        strongSelf.loginField.text = @"";
+//        strongSelf.loginField.text = @"";
         strongSelf.passwordField.text = @"";
     }]];
     [self presentViewController:alert animated:YES completion:nil];

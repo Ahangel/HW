@@ -63,7 +63,7 @@
     UIBarButtonItem *exitBarButton = [[UIBarButtonItem alloc] initWithTitle:@"Sign Out"
                                                                       style:UIBarButtonItemStyleDone
                                                                      target:self
-                                                                     action:@selector(deleteUserAndShowLoginViewCintroller)];
+                                                                     action:@selector(deleteUserAndShowLoginViewController)];
     self.navigationItem.leftBarButtonItem = exitBarButton;
 }
 
@@ -72,7 +72,7 @@
     [self.navigationController pushViewController:searchUserProfileVC animated:YES];
 }
 
-- (void)deleteUserAndShowLoginViewCintroller {
+- (void)deleteUserAndShowLoginViewController {
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"LoginStatus"];
     [self.navigationController popToRootViewControllerAnimated:YES];
 }

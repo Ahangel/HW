@@ -81,7 +81,7 @@
                        page:(NSUInteger)page
                 completion:(void(^)(NSArray * _Nullable, NSError * _Nullable))completionBlock {
     
-    NSString *path = [NSString stringWithFormat:@"https://api.github.com/search/users?q=%@+in:login&page=%lu&per_page=13", login, page];
+    NSString *path = [NSString stringWithFormat:@"https://api.github.com/search/users?q=%@+in:login&page=%lu&per_page=19", login, page];
     NSURL *url = [NSURL URLWithString:path];
     
     NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url
@@ -113,12 +113,9 @@
                                                     NSHTTPURLResponse *HTTPResponse = (NSHTTPURLResponse *)response;
                                                     NSInteger statusCode = [HTTPResponse statusCode];
                                                     
-                                                    NSDictionary *dic = [HTTPResponse allHeaderFields];
-                                                    NSLog(@"%@", dic[@"Access-Control-Expose-Headers"]);
-                                                    
                                                     NSError *responseError = [strongSelf errorWithStatusCodeCheck:statusCode responseData:searchUserInfo];
                                                     
-                                                    NSLog(@"%@", searchUserInfo);
+                                                    NSLog(@"JSON: %@", searchUserInfo);
                                                     
                                                     if (error) {
                                                         completionBlock(nil, error);
@@ -132,6 +129,7 @@
                                                     NSMutableArray *array = searchUserInfo[@"items"];
                                                     NSMutableArray *users = [NSMutableArray new];
                                                     
+                                                    NSLog(@"%@", array);
                                                     for (NSDictionary *dict in array) {
                                                         
                                                         NSString *login = dict[@"login"];
