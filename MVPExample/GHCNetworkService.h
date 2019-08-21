@@ -24,7 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
                 completion:(void(^)(NSDictionary * _Nullable, NSError * _Nullable))completionBlock;
 
 - (void)fetchRepositoriesWithLogin:(NSString *)login
-                        completion:(void(^)(GHCUserDTO * _Nullable, NSError * _Nullable))completionBlock;
+                        completion:(void(^)(NSArray * _Nullable, NSError * _Nullable))completionBlock;
 
 @end
 

@@ -11,6 +11,7 @@
 #import "AppDelegate.h"
 #import "GHCUserDTO.h"
 #import "GHCUserProfileViewController.h"
+#import "GHCSearchViewController.h"
 
 @interface GHCLoginViewController ()
 
@@ -21,6 +22,7 @@
 @property (nonatomic, strong) UILabel                   *loginLabel;
 @property (nonatomic, strong) UILabel                   *passwordLabel;
 @property (nonatomic, strong) UIImageView               *gitImageView;
+@property (nonatomic, strong) UIStackView               *loginStackView;
 
 @end
 
@@ -29,7 +31,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self setupViews];
+    [self setupStackView];
     
     self.view.backgroundColor = UIColor.whiteColor;
     self.navigationItem.title = @"GitHub Client";
@@ -45,6 +47,49 @@
     self.loginField.text = @"";
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self updateAxis:self.traitCollection];
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    [self updateAxis:self.traitCollection];
+    
+}
+
+- (void)updateAxis:(UITraitCollection *)traitCollection {
+    switch (traitCollection.horizontalSizeClass) {
+        case UIUserInterfaceSizeClassCompact:
+            self.loginStackView.axis = UILayoutConstraintAxisVertical;
+            break;
+        case UIUserInterfaceSizeClassRegular:
+            self.loginStackView.axis = UILayoutConstraintAxisHorizontal;
+        default:
+            break;
+    }
+}
+
+- (void)setupStackView {
+    
+    self.loginStackView = [UIStackView new];
+    [self setupViews];
+    [self.view addSubview:self.loginStackView];
+    
+    [self.loginStackView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    
+    self.loginStackView.axis = UILayoutConstraintAxisVertical;
+    self.loginStackView.distribution = UIStackViewDistributionEqualSpacing;
+    self.loginStackView.alignment = UIStackViewAlignmentCenter;
+    self.loginStackView.spacing = 10;
+    
+    [NSLayoutConstraint activateConstraints:@[
+                                              [self.loginStackView.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
+                                              [self.loginStackView.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor],
+                                              ]];
+    
+}
+
 #pragma mark - <LoginPresenterOutput>
 
 - (void)authorizationComplete:(NSDictionary *)userDict {
@@ -56,7 +101,16 @@
                                                                      target:self
                                                                      action:@selector(deleteUserAndShowLoginViewController)];
     userProfileVC.navigationItem.leftBarButtonItem = exitBarButton;
+    UIBarButtonItem *searchBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch
+                                                                                   target:self
+                                                                                   action:@selector(showSearchUserViewController)];
+    userProfileVC.navigationItem.rightBarButtonItem = searchBarButton;
     [self.navigationController pushViewController:userProfileVC animated:YES];
+}
+
+- (void)showSearchUserViewController {
+    GHCSearchViewController *searchUserProfileVC = [GHCSearchViewController new];
+    [self.navigationController pushViewController:searchUserProfileVC animated:YES];
 }
 
 - (void)deleteUserAndShowLoginViewController {
@@ -73,7 +127,6 @@
                                               style:UIAlertActionStyleDefault
                                             handler:^(UIAlertAction * _Nonnull action) {
         __strong typeof(self) strongSelf = weakSelf;
-//        strongSelf.loginField.text = @"";
         strongSelf.passwordField.text = @"";
     }]];
     [self presentViewController:alert animated:YES completion:nil];
@@ -85,25 +138,24 @@
 }
 
 - (void)setupViews {
+    [self setupGitImageView];
+    [self setupLoginLabel];
     [self setupLoginField];
+    [self setupPasswordLabel];
     [self setupPasswordField];
     [self setupSignInButton];
-    [self setupLoginLabel];
-    [self setupPasswordLabel];
-    [self setupGitImageView];
 }
 
 #pragma mark - Setup profileImage
 
 - (void)setupGitImageView {
     self.gitImageView = [UIImageView new];
-    [self.view addSubview:self.gitImageView];
+    [self.loginStackView addArrangedSubview:self.gitImageView];
     [self.gitImageView setImage:[UIImage imageNamed:@"github-logo"]];
     [self.gitImageView setTranslatesAutoresizingMaskIntoConstraints:NO];
     
     [NSLayoutConstraint activateConstraints:@[
-                                              [self.gitImageView.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
-                                              [self.gitImageView.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor constant:-210],
+                                              //[self.gitImageView.centerXAnchor constraintEqualToAnchor:self.loginStackView.centerXAnchor],
                                               [self.gitImageView.heightAnchor constraintEqualToConstant:180],
                                               [self.gitImageView.widthAnchor constraintEqualToConstant:270]
                                               ]];
@@ -115,7 +167,7 @@
 - (void)setupLoginField {
     
     self.loginField = [UITextField new];
-    [self.view addSubview:self.loginField];
+    [self.loginStackView addArrangedSubview:self.loginField];
     self.loginField.text = @"";
     self.loginField.textAlignment = NSTextAlignmentCenter;
     self.loginField.borderStyle = UITextBorderStyleRoundedRect;
@@ -123,9 +175,8 @@
     self.loginField.translatesAutoresizingMaskIntoConstraints = NO;
     
     [NSLayoutConstraint activateConstraints:@[
-                                              [self.loginField.centerYAnchor    constraintEqualToAnchor:self.view.centerYAnchor constant: -20],
                                               [self.loginField.heightAnchor     constraintEqualToConstant:50.0f],
-                                              [self.loginField.centerXAnchor    constraintEqualToAnchor:self.view.centerXAnchor],
+                                              //[self.loginField.centerXAnchor    constraintEqualToAnchor:self.loginStackView.centerXAnchor],
                                               [self.loginField.widthAnchor      constraintEqualToConstant:200.0f]
                                               ]];
 }
@@ -133,7 +184,7 @@
 - (void)setupPasswordField {
     
     self.passwordField = [UITextField new];
-    [self.view addSubview:self.passwordField];
+    [self.loginStackView addArrangedSubview:self.passwordField];
     self.passwordField.text = @"";
     self.passwordField.backgroundColor = UIColor.clearColor;
     self.passwordField.textAlignment = NSTextAlignmentCenter;
@@ -143,9 +194,8 @@
     self.passwordField.translatesAutoresizingMaskIntoConstraints = NO;
     
     [NSLayoutConstraint activateConstraints:@[
-                                              [self.passwordField.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor constant:70],
                                               [self.passwordField.heightAnchor  constraintEqualToConstant:50],
-                                              [self.passwordField.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
+                                             // [self.passwordField.centerXAnchor constraintEqualToAnchor:self.loginStackView.centerXAnchor],
                                               [self.passwordField.widthAnchor   constraintEqualToConstant:200]
                                               ]];
 }
@@ -154,7 +204,7 @@
 
 - (void)setupLoginLabel {
     self.loginLabel = [UILabel new];
-    [self.view addSubview:self.loginLabel];
+    [self.loginStackView addArrangedSubview:self.loginLabel];
     self.loginLabel.backgroundColor = UIColor.clearColor;
     self.loginLabel.textAlignment = NSTextAlignmentLeft;
     self.loginLabel.text = @"Login:";
@@ -162,8 +212,7 @@
     [self.loginLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
     
     [NSLayoutConstraint activateConstraints:@[
-                                              [self.loginLabel.centerXAnchor    constraintEqualToAnchor:self.view.centerXAnchor],
-                                              [self.loginLabel.bottomAnchor     constraintEqualToAnchor:self.loginField.topAnchor],
+                                              //[self.loginLabel.centerXAnchor    constraintEqualToAnchor:self.loginStackView.centerXAnchor],
                                               [self.loginLabel.heightAnchor     constraintEqualToConstant:30],
                                               [self.loginLabel.widthAnchor      constraintEqualToConstant:200]
                                               ]];
@@ -172,7 +221,7 @@
 
 - (void)setupPasswordLabel {
     self.passwordLabel = [UILabel new];
-    [self.view addSubview:self.passwordLabel];
+    [self.loginStackView addArrangedSubview:self.passwordLabel];
     self.passwordLabel.backgroundColor = UIColor.clearColor;
     self.passwordLabel.textAlignment = NSTextAlignmentLeft;
     self.passwordLabel.text = @"Password:";
@@ -180,8 +229,7 @@
     [self.passwordLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
     
     [NSLayoutConstraint activateConstraints:@[
-                                              [self.passwordLabel.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
-                                              [self.passwordLabel.bottomAnchor  constraintEqualToAnchor:self.passwordField.topAnchor],
+                                              //[self.passwordLabel.centerXAnchor constraintEqualToAnchor:self.loginStackView.centerXAnchor],
                                               [self.passwordLabel.heightAnchor  constraintEqualToConstant:30],
                                               [self.passwordLabel.widthAnchor   constraintEqualToConstant:200]
                                               ]];
@@ -192,16 +240,15 @@
 - (void)setupSignInButton {
     
     self.signInButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    [self.view addSubview:self.signInButton];
+    [self.loginStackView addArrangedSubview:self.signInButton];
     [self.signInButton setTitle:@"Sign in" forState:UIControlStateNormal];
     [self.signInButton addTarget:self action:@selector(signInButtonTapped) forControlEvents:UIControlEventTouchUpInside];
     
     self.signInButton.translatesAutoresizingMaskIntoConstraints = NO;
     
     [NSLayoutConstraint activateConstraints:@[
-                                              [self.signInButton.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor constant: 140],
                                               [self.signInButton.heightAnchor constraintEqualToConstant:50],
-                                              [self.signInButton.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
+                                              //[self.signInButton.centerXAnchor constraintEqualToAnchor:self.loginStackView.centerXAnchor],
                                               [self.signInButton.widthAnchor constraintEqualToConstant:150]
                                               ]];
     

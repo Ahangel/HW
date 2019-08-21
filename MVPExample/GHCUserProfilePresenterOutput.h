@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @class GHCUserDTO;
 @protocol GHCUserProfilePresenterOutput <NSObject>
 
-- (void)fetchComplete:(GHCUserDTO *)user;
+- (void)fetchComplete:(NSArray *)user;
 - (void)showErrorWith:(NSString *)title message:(NSString *)message;
 
 @end

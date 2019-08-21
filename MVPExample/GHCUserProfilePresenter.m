@@ -31,7 +31,7 @@
     __weak typeof(self) weakSelf = self;
     
     [self.networkService fetchRepositoriesWithLogin:login
-                                         completion:^(GHCUserDTO * _Nullable user, NSError * _Nullable error) {
+                                         completion:^(NSArray * _Nullable user, NSError * _Nullable error) {
         __strong typeof(self) strongSelf = weakSelf;
         
         if (error) {

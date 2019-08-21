@@ -67,7 +67,8 @@
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == self.searchResult.count - 1 && self.totalCounter >= 19) {
+    if (indexPath.row == self.searchResult.count - 1 && self.totalCounter >= 19 && indexPath.row != self.totalCounter - 1) {
+        NSLog(@"%lu", indexPath.row);
         self.pageCounter++;
         [self.presenter addUserToSearchArrayWithLogin:self.searchBar.text page:self.pageCounter];
     }
@@ -116,9 +117,11 @@
 
 - (void)searchComplete:(nonnull NSArray *)users {
     
-    self.searchResult = [users mutableCopy];
-    self.totalCounter = [[self.searchResult objectAtIndex:self.searchResult.count - 1] integerValue];
-    [self.searchResult removeLastObject];
+    @autoreleasepool {
+        self.searchResult = [users mutableCopy];
+        self.totalCounter = [[self.searchResult objectAtIndex:self.searchResult.count - 1] integerValue];
+        [self.searchResult removeLastObject];
+    }
     [self.tableView reloadData];
 }
 

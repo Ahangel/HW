@@ -51,19 +51,8 @@
     [self.tableView registerClass:[GHCUserProfileInfoTableViewCell class] forCellReuseIdentifier:NSStringFromClass([GHCUserProfileInfoTableViewCell class])];
     [self createUserProfileInfoStackView];
     [self createTableView];
-    [self createSearchBarButton];
-}
-
-- (void)createSearchBarButton {
-    UIBarButtonItem *searchBarButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch
-                                                                                target:self
-                                                                                action:@selector(showSearchUserViewController)];
-    self.navigationItem.rightBarButtonItem = searchBarButton;
-}
-
-- (void)showSearchUserViewController {
-    GHCSearchViewController *searchUserProfileVC = [GHCSearchViewController new];
-    [self.navigationController pushViewController:searchUserProfileVC animated:YES];
+    self.presenter = [GHCUserProfilePresenter new];
+    self.presenter.output = self;
 }
 
 - (void)createUserProfileInfoStackView {
@@ -150,11 +139,17 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self.presenter fetchReposWithLogin:self.userLogin];
+    if (indexPath.row == 1) {
+        [self.presenter fetchReposWithLogin:self.userLogin];
+    }
+//    } else {
+//        [self.presenter fetchSta]
+//    }
 }
 
-- (void)fetchComplete:(GHCUserDTO *)user {
-    
+- (void)fetchComplete:(NSArray *)user {
+    GHCUserInfoTableViewController *userInfoTableVC = [[GHCUserInfoTableViewController alloc] initWithUserName:self.userLogin userRepo:user];
+    [self.navigationController pushViewController:userInfoTableVC animated:YES];
 }
 
 - (void)showErrorWith:(NSString *)title message:(NSString *)message {

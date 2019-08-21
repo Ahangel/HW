@@ -190,7 +190,7 @@
 }
 
 - (void)fetchRepositoriesWithLogin:(NSString *)login
-                        completion:(void(^)(GHCUserDTO * _Nullable, NSError * _Nullable))completionBlock {
+                        completion:(void(^)(NSArray * _Nullable, NSError * _Nullable))completionBlock {
     
     NSString *path = [NSString stringWithFormat:@"https://api.github.com/users/%@/repos", login];
     NSURL *url = [NSURL URLWithString:path];
@@ -213,6 +213,7 @@
                                                     NSInteger statusCode = [HTTPResponse statusCode];
                                                     
                                                     NSError *responseError = [strongSelf errorWithStatusCodeCheck:statusCode responseData:fetchUserRepos];
+                                                    NSLog(@"%@", fetchUserRepos);
 
                                                     if (error) {
                                                         completionBlock(nil, error);
