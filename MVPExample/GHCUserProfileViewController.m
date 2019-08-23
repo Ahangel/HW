@@ -13,6 +13,7 @@
 #import "GHCSearchViewController.h"
 #import "GHCUserInfoTableViewController.h"
 #import "GHCUserProfilePresenter.h"
+#import "GHCUsersTableViewController.h"
 
 @interface GHCUserProfileViewController ()
 
@@ -54,6 +55,8 @@
     self.presenter = [GHCUserProfilePresenter new];
     self.presenter.output = self;
 }
+
+#pragma mark - Setup Views
 
 - (void)createUserProfileInfoStackView {
     
@@ -108,6 +111,10 @@
                                                                                    repositoriesCounter:self.publicReposCounter
                                                                             starredRepositoriesCounter:self.starredRepositoriesCounter
                                                                                           forIndexPath:0];
+        [cell.followersButton addTarget:self
+                                 action:@selector(showFollowersList)
+                       forControlEvents:UIControlEventTouchUpInside];
+
         return cell;
     } else if (indexPath.row == 1) {
         GHCUserProfileInfoTableViewCell *cell = [[GHCUserProfileInfoTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
@@ -141,18 +148,41 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 1) {
         [self.presenter fetchReposWithLogin:self.userLogin];
+    } else if (indexPath.row == 2) {
+        [self.presenter fetchStarredReposWithLogin:self.userLogin];
     }
-//    } else {
-//        [self.presenter fetchSta]
-//    }
 }
+
+#pragma mark - <GHCUserProfilePresenterOutput>
 
 - (void)fetchComplete:(NSArray *)user {
     GHCUserInfoTableViewController *userInfoTableVC = [[GHCUserInfoTableViewController alloc] initWithUserName:self.userLogin userRepo:user];
     [self.navigationController pushViewController:userInfoTableVC animated:YES];
 }
 
-- (void)showErrorWith:(NSString *)title message:(NSString *)message {
-    
+- (void)showFollowersList {
+    [self.presenter fetchFollowersWithLogin:self.userLogin];
 }
+
+- (void)fetchFollowersComplete:(NSArray *)users {
+    GHCUsersTableViewController *followers = [[GHCUsersTableViewController alloc] initWithFollowersArray:users];
+    [self.navigationController pushViewController:followers animated:YES];
+}
+
+- (void)fetchStarredReposComplete:(NSArray *)starredRepos {
+    GHCUserInfoTableViewController *userInfoTableVC = [[GHCUserInfoTableViewController alloc] initWithUserName:self.userLogin userRepo:starredRepos];
+    [self.navigationController pushViewController:userInfoTableVC animated:YES];
+}
+
+- (void)showErrorWith:(NSString *)title message:(NSString *)message {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:title
+                                                                   message:message
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:@"OK"
+                                              style:UIAlertActionStyleDefault
+                                            handler:^(UIAlertAction * _Nonnull action) {
+                                            }]];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
 @end

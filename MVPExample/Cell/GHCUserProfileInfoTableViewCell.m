@@ -10,8 +10,6 @@
 
 @interface GHCUserProfileInfoTableViewCell ()
 
-@property (nonatomic, strong)   UIButton    *followersButton;
-@property (nonatomic, strong)   UIButton    *followingButton;
 @property (nonatomic, strong)   UILabel     *repositoriesLabel;
 @property (nonatomic, strong)   UILabel     *starredRepositoriesLabel;
 @property (nonatomic, copy)     NSString    *followersCounter;

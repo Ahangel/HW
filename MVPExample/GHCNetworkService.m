@@ -60,9 +60,13 @@
                                                         return;
                                                     }
                                                     
-                                                    NSString *starredReposCounter = [self fetchStarredRepositoriesByLogin:login];
+                                                    [self countStarredReposWithLogin:login
+                                                                          completion:^(NSUInteger starredReposCounter, NSError * _Nullable error) {
+                                                        NSString *starredRepos = [NSString stringWithFormat:@"%lu", starredReposCounter];
+                                                        [responseData setObject:starredRepos forKey:@"starred_repos"];
+                                                    }];
                                                     
-                                                    [responseData setObject:starredReposCounter forKey:@"starred_repos"];
+                                                    
 
                                                     dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                                                         NSURL *url = [NSURL URLWithString:responseData[@"avatar_url"]];
@@ -115,8 +119,6 @@
                                                     
                                                     NSError *responseError = [strongSelf errorWithStatusCodeCheck:statusCode responseData:searchUserInfo];
                                                     
-                                                    NSLog(@"JSON: %@", searchUserInfo);
-                                                    
                                                     if (error) {
                                                         completionBlock(nil, error);
                                                         return;
@@ -129,14 +131,13 @@
                                                     NSMutableArray *array = searchUserInfo[@"items"];
                                                     NSMutableArray *users = [NSMutableArray new];
                                                     
-                                                    NSLog(@"%@", array);
                                                     for (NSDictionary *dict in array) {
                                                         
                                                         NSString *login = dict[@"login"];
                                                         [users addObject:login];
                                                     }
                                                     [users addObject:[NSString stringWithFormat:@"%@", searchUserInfo[@"total_count"]]];
-                                                    NSLog(@"%@", users);
+
                                                     completionBlock([users copy], nil);
                                                 }];
     [dataTask resume];
@@ -172,9 +173,12 @@
                                                         return;
                                                     }
                                                     
-                                                    NSString *starredReposCounter = [self fetchStarredRepositoriesByLogin:login];
+                                                    [self countStarredReposWithLogin:login
+                                                                          completion:^(NSUInteger starredReposCounter, NSError * _Nullable error) {
+                                                                              NSString *starredRepos = [NSString stringWithFormat:@"%lu", starredReposCounter];
+                                                                              [responseData setObject:starredRepos forKey:@"starred_repos"];
+                                                                          }];
                                                     
-                                                    [responseData setObject:starredReposCounter forKey:@"starred_repos"];
                                                     
                                                     dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                                                         NSURL *url = [NSURL URLWithString:responseData[@"avatar_url"]];
@@ -213,7 +217,6 @@
                                                     NSInteger statusCode = [HTTPResponse statusCode];
                                                     
                                                     NSError *responseError = [strongSelf errorWithStatusCodeCheck:statusCode responseData:fetchUserRepos];
-                                                    NSLog(@"%@", fetchUserRepos);
 
                                                     if (error) {
                                                         completionBlock(nil, error);
@@ -239,7 +242,7 @@
     [dataTask resume];
 }
 
-- (NSString *)fetchStarredRepositoriesByLogin:(NSString *)userLogin {
+- (void)countStarredReposWithLogin:(NSString *)userLogin completion:(void(^)(NSUInteger, NSError * _Nullable))completionBlock {
     
     NSString *path = [NSString stringWithFormat:@"https://api.github.com/users/%@/starred", userLogin];
     NSURL *url = [NSURL URLWithString:path];
@@ -249,17 +252,114 @@
                                                        timeoutInterval:0];
     NSURLSession *session = [NSURLSession sharedSession];
     
-    __block NSUInteger starredReposCounter = 0;
+    __block NSUInteger starredReposCounter;
     
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request
                                                 completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
                                                     
                                                     NSArray *fetchUserStarredRepos = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+//                                                    NSLog(@"В блоке %lu", fetchUserStarredRepos.count);
                                                     starredReposCounter = fetchUserStarredRepos.count;
+//                                                    NSLog(@"В блоке----%lu", starredReposCounter);
+                                                    completionBlock(starredReposCounter, nil);
                                                 }];
     [dataTask resume];
-    return [NSString stringWithFormat:@"%lu",starredReposCounter];
 }
+
+- (void)fetchFollowersWithLogin:(NSString *)login
+                completion:(void(^)(NSArray * _Nullable, NSError * _Nullable))completionBlock {
+    
+    NSString *path = [NSString stringWithFormat:@"https://api.github.com/users/%@/followers", login];
+    NSURL *url = [NSURL URLWithString:path];
+    
+    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url
+                                                           cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
+                                                       timeoutInterval:0];
+    
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request
+                                                completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                                                    
+                                                    NSArray *responseData = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+                                                    
+                                                    NSHTTPURLResponse *HTTPResponse = (NSHTTPURLResponse *)response;
+                                                    NSInteger statusCode = [HTTPResponse statusCode];
+                                                    
+                                                    NSError *responseError = [self errorWithStatusCodeCheck:statusCode responseData:responseData];
+                                                    
+                                                    if (error) {
+                                                        completionBlock(nil, error);
+                                                        return;
+                                                    }
+                                                    if (responseError) {
+                                                        completionBlock(nil, responseError);
+                                                        return;
+                                                    }
+                                                    
+                                                    NSMutableArray *followers = [NSMutableArray new];
+                                                    for (NSDictionary *user in responseData) {
+                                                        @autoreleasepool {
+                                                            NSString *followerUser = user[@"login"];
+                                                            [followers addObject:followerUser];
+                                                        }
+                                                    }
+                                                    
+                                                    completionBlock([followers copy], nil);
+                                                }];
+    [dataTask resume];
+}
+
+- (void)fetchStarredReposWithLogin:(NSString *)login
+                        completion:(void(^)(NSArray * _Nullable, NSError * _Nullable))completionBlock {
+    
+    NSString *path = [NSString stringWithFormat:@"https://api.github.com/users/%@/starred", login];
+    NSURL *url = [NSURL URLWithString:path];
+    
+    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url
+                                                           cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
+                                                       timeoutInterval:0];
+    NSURLSession *session = [NSURLSession sharedSession];
+    
+    __weak typeof(self) weakSelf = self;
+    
+    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request
+                                                completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                                                    
+                                                    __strong typeof(self) strongSelf = weakSelf;
+                                                    
+                                                    NSArray *fetchUserRepos = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+                                                    
+                                                    NSHTTPURLResponse *HTTPResponse = (NSHTTPURLResponse *)response;
+                                                    NSInteger statusCode = [HTTPResponse statusCode];
+                                                    
+                                                    NSError *responseError = [strongSelf errorWithStatusCodeCheck:statusCode responseData:fetchUserRepos];
+                                                    
+                                                    if (error) {
+                                                        completionBlock(nil, error);
+                                                        return;
+                                                    }
+                                                    
+                                                    if (responseError) {
+                                                        completionBlock(nil, responseError);
+                                                        return;
+                                                    }
+                                                    
+                                                    NSMutableArray<GHCRepoDTO *> *repos = [NSMutableArray new];
+                                                    
+                                                    for (NSDictionary *repoDict in fetchUserRepos) {
+                                                        @autoreleasepool {
+                                                            GHCRepoDTO *repo = [[GHCRepoDTO alloc] initWithDictionary:repoDict];
+                                                            [repos addObject:repo];
+                                                        }
+                                                    }
+                                                    
+                                                    NSLog(@"%@",repos);
+                                                    completionBlock([repos copy], nil);
+                                                    
+                                                }];
+    [dataTask resume];
+}
+
 
 - (nullable NSError *)errorWithStatusCodeCheck:(NSInteger)statusCode responseData:(id)responseData {
     

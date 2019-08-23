@@ -15,6 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)fetchComplete:(NSArray *)user;
 - (void)showErrorWith:(NSString *)title message:(NSString *)message;
+- (void)fetchFollowersComplete:(NSArray *)users;
+- (void)fetchStarredReposComplete:(NSArray *)starredRepos;
 
 @end
 

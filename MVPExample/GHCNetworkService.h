@@ -26,6 +26,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)fetchRepositoriesWithLogin:(NSString *)login
                         completion:(void(^)(NSArray * _Nullable, NSError * _Nullable))completionBlock;
 
+- (void)fetchFollowersWithLogin:(NSString *)login
+                     completion:(void(^)(NSArray * _Nullable, NSError * _Nullable))completionBlock;
+
+- (void)fetchStarredReposWithLogin:(NSString *)login
+                        completion:(void(^)(NSArray * _Nullable, NSError * _Nullable))completionBlock;
+
 @end
 
 NS_ASSUME_NONNULL_END

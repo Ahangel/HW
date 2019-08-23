@@ -11,6 +11,7 @@
 		01CF3655230992370056F25E /* GHCSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01CF3654230992370056F25E /* GHCSearchViewController.m */; };
 		01CF365A2309ABD30056F25E /* GHCSearchPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 01CF36592309ABD30056F25E /* GHCSearchPresenter.m */; };
 		46019F3C230AE8AD00ED2BD4 /* GHCUserProfilePresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 46019F3B230AE8AD00ED2BD4 /* GHCUserProfilePresenter.m */; };
+		46019F42230FE67100ED2BD4 /* GHCUsersTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46019F41230FE67100ED2BD4 /* GHCUsersTableViewController.m */; };
 		464CAE8D23055B1100AD58DB /* GHCUserProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 464CAE8C23055B1100AD58DB /* GHCUserProfileViewController.m */; };
 		464CAE91230567F600AD58DB /* GHCUserProfileInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 464CAE90230567F600AD58DB /* GHCUserProfileInfoView.m */; };
 		465C02D022FC1D2E00DE6542 /* GHCUserInfoTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 465C02CF22FC1D2E00DE6542 /* GHCUserInfoTableViewController.m */; };
@@ -53,6 +54,8 @@
 		46019F3A230AE8AD00ED2BD4 /* GHCUserProfilePresenter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GHCUserProfilePresenter.h; sourceTree = "<group>"; };
 		46019F3B230AE8AD00ED2BD4 /* GHCUserProfilePresenter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GHCUserProfilePresenter.m; sourceTree = "<group>"; };
 		46019F3D230AE98400ED2BD4 /* GHCUserProfilePresenterOutput.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GHCUserProfilePresenterOutput.h; sourceTree = "<group>"; };
+		46019F40230FE67100ED2BD4 /* GHCUsersTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GHCUsersTableViewController.h; sourceTree = "<group>"; };
+		46019F41230FE67100ED2BD4 /* GHCUsersTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GHCUsersTableViewController.m; sourceTree = "<group>"; };
 		464CAE8B23055B1100AD58DB /* GHCUserProfileViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GHCUserProfileViewController.h; sourceTree = "<group>"; };
 		464CAE8C23055B1100AD58DB /* GHCUserProfileViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GHCUserProfileViewController.m; sourceTree = "<group>"; };
 		464CAE8F230567F600AD58DB /* GHCUserProfileInfoView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GHCUserProfileInfoView.h; sourceTree = "<group>"; };
@@ -147,6 +150,23 @@
 				1A77D2C6657E48054002E120 /* Pods-MVPExample.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		46019F3E230FE62F00ED2BD4 /* Users */ = {
+			isa = PBXGroup;
+			children = (
+				46019F3F230FE64800ED2BD4 /* View */,
+			);
+			name = Users;
+			sourceTree = "<group>";
+		};
+		46019F3F230FE64800ED2BD4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				46019F40230FE67100ED2BD4 /* GHCUsersTableViewController.h */,
+				46019F41230FE67100ED2BD4 /* GHCUsersTableViewController.m */,
+			);
+			name = View;
 			sourceTree = "<group>";
 		};
 		464CAE8823055AC400AD58DB /* UserProfile */ = {
@@ -256,6 +276,7 @@
 		E027C7AC22F33A890056AAA0 /* MVPExample */ = {
 			isa = PBXGroup;
 			children = (
+				46019F3E230FE62F00ED2BD4 /* Users */,
 				01CF3650230992030056F25E /* Search */,
 				464CAE8823055AC400AD58DB /* UserProfile */,
 				465C02CB22FC1CF500DE6542 /* UserInfo */,
@@ -498,6 +519,7 @@
 				E027C7D922F33B8D0056AAA0 /* GHCLoginPresenter.m in Sources */,
 				465C02DF22FDA78C00DE6542 /* GHCRepoDTO.m in Sources */,
 				01CF365A2309ABD30056F25E /* GHCSearchPresenter.m in Sources */,
+				46019F42230FE67100ED2BD4 /* GHCUsersTableViewController.m in Sources */,
 				01CF3655230992370056F25E /* GHCSearchViewController.m in Sources */,
 				465C02D022FC1D2E00DE6542 /* GHCUserInfoTableViewController.m in Sources */,
 				01CF364F230608CA0056F25E /* GHCUserProfileInfoTableViewCell.m in Sources */,

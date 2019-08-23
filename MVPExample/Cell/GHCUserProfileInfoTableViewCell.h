@@ -12,6 +12,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface GHCUserProfileInfoTableViewCell : UITableViewCell
 
+@property (nonatomic, strong)   UIButton    *followersButton;
+@property (nonatomic, strong)   UIButton    *followingButton;
+
 - (instancetype)initWithStyle:(UITableViewCellStyle)style
               reuseIdentifier:(NSString *)reuseIdentifier
              followersCounter:(NSString *)followersCounter

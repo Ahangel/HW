@@ -15,10 +15,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface GHCUserProfilePresenter : NSObject
 
-@property (nonatomic, weak)     id<GHCUserProfilePresenterOutput>    output;
-@property (nonatomic, strong)   GHCUserDTO                     *model;
+@property (nonatomic, weak)     id<GHCUserProfilePresenterOutput>   output;
+@property (nonatomic, strong)   GHCUserDTO                          *model;
 
 - (void)fetchReposWithLogin:(NSString *)userName;
+- (void)fetchFollowersWithLogin:(NSString *)login;
+- (void)fetchStarredReposWithLogin:(NSString *)login;
 
 @end
 

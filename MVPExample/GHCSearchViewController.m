@@ -98,21 +98,6 @@
     }
 }
 
-//-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
-//{
-//    [searchBar resignFirstResponder];
-//    self.searchEnabled = YES;
-//    [self.presenter searchUserWithLogin:self.searchBar.text page:1];
-//}
-//
-//-(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
-//{
-//    [searchBar resignFirstResponder];
-//    [searchBar setText:@""];
-//    self.searchEnabled = NO;
-//    [self.tableView reloadData];
-//}
-
 #pragma mark - <GHCSearchViewPresenterOutput>
 
 - (void)searchComplete:(nonnull NSArray *)users {
@@ -132,6 +117,16 @@
     [self.tableView reloadData];
 }
 
+- (void)fetchComplete:(NSDictionary *)user {
+    GHCUserProfileViewController *userProfile = [[GHCUserProfileViewController alloc] initWithDictionary:user];
+    userProfile.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(goBackToSearchVC)];
+    [self.navigationController pushViewController:userProfile animated:YES];
+}
+
+- (void)goBackToSearchVC {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (void)showErrorWith:(NSString *)title message:(NSString *)message {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:title
                                                                    message:message
@@ -141,16 +136,6 @@
                                             handler:^(UIAlertAction * _Nonnull action) {
                                             }]];
     [self presentViewController:alert animated:YES completion:nil];
-}
-
-- (void)fetchComplete:(NSDictionary *)user {
-    GHCUserProfileViewController *userProfile = [[GHCUserProfileViewController alloc] initWithDictionary:user];
-    userProfile.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(goBackToSearchVC)];
-    [self.navigationController pushViewController:userProfile animated:YES];
-}
-
-- (void)goBackToSearchVC {
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - Setup Views
@@ -195,6 +180,5 @@
                                               [self.searchBar.rightAnchor constraintEqualToAnchor:self.view.rightAnchor]
                                               ]];
 }
-
 
 @end
